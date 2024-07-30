@@ -1,26 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <component :is="currentLayout">
+      <router-view />
+    </component>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Admin from '@/view/admin.vue';
+import Client from '@/view/client.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+
+    Client,
+    Admin,
+
+  },
+  computed: {
+    currentLayout() {
+      return this.$route.path.startsWith('/admin') ? Admin : Client;
+    }
+
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
