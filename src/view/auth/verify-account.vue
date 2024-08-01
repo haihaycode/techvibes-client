@@ -195,8 +195,9 @@
                     </div>
                 </Form>
                 <div class="mt-4 text-sm text-gray-600 text-center">
-                    <p>Quay lại đăng nhập ? <router-link to="/login" class="text-black hover:underline">Đăng
-                            Nhập tài khoản </router-link>
+                    <p>Đăng xuất tài khoản ? <button @click="logoutUser" class="text-black hover:underline">
+                            Đăng xuất
+                        </button>
                     </p>
                 </div>
             </div>

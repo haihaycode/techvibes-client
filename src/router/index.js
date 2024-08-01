@@ -42,18 +42,41 @@ router.beforeEach((to, from, next) => {
 
 
 router.beforeEach((to, from, next) => {
-    var notyf = new Notyf()
+    const notyf = new Notyf();
+    const notyfInfo = new Notyf({
+        types: [
+            {
+                type: 'info',
+                background: 'blue',
+                icon: true
+            }
+        ]
+    });
+
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     const isAdminRoute = to.matched.some(record => record.path.includes('/admin'));
     const isLoggedIn = store.getters.isLoggedIn;
     const userRoles = store.getters.userRoles;
+
+    const isLoginPage = to.path === '/login';
+    const isRegisterPage = to.path === '/Register';
 
     if (requiresAuth && !isLoggedIn) {
         notyf.error('Bạn chưa đăng nhập');
         next('/login');
     } else if (isAdminRoute && (!userRoles.includes('ROLE_ADMIN') && !userRoles.includes('ROLE_STAFF'))) {
         notyf.error('Bạn không đủ quyền truy cập');
-        next('/login');
+        next('/');
+    } else if (isLoggedIn && userRoles.length === 0 && to.path !== '/verify-account' && to.path !== '/logout') {
+        notyfInfo.open({
+            type: 'info',
+            message: 'Bạn không đủ quyền truy cập'
+        });
+        next('/verify-account');
+    } else if (isLoggedIn && userRoles.length > 0 && to.path == '/verify-account') {
+        next('/');
+    } else if (isLoggedIn && (isLoginPage || isRegisterPage)) {
+        next('/');
     } else {
         next();
     }

@@ -22,6 +22,20 @@ const adminRoutes = [
                 }
 
             },
+            {
+                path: 'account',
+                meta: {
+                    title: "Quản lý người dùng - Techvibes ",
+                    description: "Techvibes ",
+                    requiresAuth: true
+                },
+                components: {
+                    default: useComponent('admin/account'),
+                    NavAndSideBarAdmin: NavAndSideBarAdmin,
+                    footerAdmin: footerAdmin
+                }
+
+            },
 
         ]
     },

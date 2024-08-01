@@ -55,6 +55,7 @@ const store = createStore({
         async logout({ commit }) {
             await authService.logout();
             commit('logout');
+            window.location.href = '/login';
         },
     },
     getters: {

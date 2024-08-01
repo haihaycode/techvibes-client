@@ -69,6 +69,7 @@ const authService = {
         Cookies.remove('user');
         Cookies.remove('roles');
         delete axios.defaults.headers.common['Authorization'];
+
     },
 };
 
