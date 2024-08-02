@@ -4,11 +4,14 @@
             class="relative w-full h-full overflow-y-auto overflow-x-hidden bg-gray-50 lg:ml-64 dark:bg-gray-900 mt-14">
             <main>
 
+
                 <!-- bộ lọc -->
                 <div
                     class=" bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
                     <div class="w-full mb-1">
+
                         <div class="mb-4">
+                            <!-- breakcrum -->
                             <nav class="flex mb-5" aria-label="Breadcrumb">
                                 <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
                                     <li class="inline-flex items-center">
@@ -45,16 +48,27 @@
                                                     clip-rule="evenodd"></path>
                                             </svg>
                                             <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
-                                                aria-current="page"> Quản lý người dùng</span>
+                                                aria-current="page"> Quản lý Phân Quyền</span>
                                         </div>
                                     </li>
                                 </ol>
                             </nav>
-                            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                                Quản lý người
-                                dùng
-                            </h1>
                         </div>
+                        <!-- Mô tả các quyền -->
+                        <div class="mb-4 ">
+                            <ul class="space-y-4">
+                                <li v-for="role in displayRoles" :key="role.id"
+                                    class="border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                    <div class="p-4 bg-white dark:bg-gray-700 rounded-lg shadow-md">
+                                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ role.name }}
+                                        </h2>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300" v-html="role.description">
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
                         <div
                             class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
                             <div class="flex items-center mb-4 sm:mb-0 space-x-2">
@@ -95,6 +109,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <!-- table sản phẩm  -->
                 <div class="flex flex-col ">
@@ -186,7 +201,7 @@
                                                 <span
                                                     class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
                                                     v-else v-for="(role, index) in a.roles" :key="index">{{
-                                        role.name }} &nbsp; </span>
+                                    role.name }} &nbsp; </span>
                                             </td>
 
                                             <td
@@ -204,7 +219,7 @@
                                                             d="M5 8a4 4 0 1 1 7.796 1.263l-2.533 2.534A4 4 0 0 1 5 8Zm4.06 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h2.172a2.999 2.999 0 0 1-.114-1.588l.674-3.372a3 3 0 0 1 .82-1.533L9.06 13Zm9.032-5a2.907 2.907 0 0 0-2.056.852L9.967 14.92a1 1 0 0 0-.273.51l-.675 3.373a1 1 0 0 0 1.177 1.177l3.372-.675a1 1 0 0 0 .511-.273l6.07-6.07a2.91 2.91 0 0 0-.944-4.742A2.907 2.907 0 0 0 18.092 8Z"
                                                             clip-rule="evenodd" />
                                                     </svg>
-                                                    <span>Cập nhật</span>
+                                                    <span>Cập nhật Quyền</span>
                                                 </button>
 
                                                 <button @click="exportUsersToExcelById(a.userId)"
@@ -282,7 +297,7 @@
 
                         <span
                             class="border border-1 mx-2 rounded-lg text-gray-900 text-sm py-2 px-3 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{
-                                        filters.page + 1 }} / {{ filters.scope ? filters.scope.totalPages : "" }} </span>
+                                    filters.page + 1 }} / {{ filters.scope ? filters.scope.totalPages : "" }} </span>
                         <form class="max-w-sm mx-auto flex items-center">
 
                             <select id="limit" v-model="filters.limit" @change="loadAccounts"
@@ -371,7 +386,7 @@
                     </div>
                 </div>
 
-                <!-- edit người dùng -->
+                <!-- edit quyền người dùng -->
                 <div v-if="isModalVisible" class="fixed inset-0 flex items-center justify-center z-50">
                     <div class="fixed inset-0 bg-gray-500 " @click="toggleModal" style="background-color:  #ccccccd0;">
                     </div>
@@ -380,7 +395,7 @@
                         <div
                             class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Cập nhật người dùng # {{ user.userId }}
+                                Cập nhật quyền # {{ user.userId }} - {{ user.fullName }}
                             </h3>
                             <button type="button"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -395,7 +410,7 @@
                         </div>
                         <!--  body -->
                         <div class="p-4 md:p-5 space-y-4">
-                            <form @submit.prevent="updateUser">
+                            <form @submit.prevent="updateRole">
                                 <div class="flex items-start mb-5">
                                     <div class="flex items-center h-5">
                                         <input id="terms" type="checkbox"
@@ -407,23 +422,24 @@
                                         rủi ro <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">Thay
                                             đổi đúng mục đích </a></label>
                                 </div>
-                                <div class="mb-5">
-                                    <label for="email"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tài khoản
-                                    </label>
-                                    <input type="email" id="email" v-model="user.email"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Techvibes@gmail.com" required />
-                                </div>
-                                <div class="mb-5">
-                                    <label for="fullname"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Họ và
-                                        tên</label>
-                                    <input type="text" id="fullname" v-model="user.fullName"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required />
-                                </div>
-                                <Button type="submit" :text="user.loading ? 'Đang xử lý...' : 'Cập nhật người dùng này'"
+
+                                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Technology</h3>
+                                <ul
+                                    class="w-full mb-1 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                    <li v-for="r in  roles " :key="r.id"
+                                        class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                        <div class="flex items-center ps-3">
+                                            <input :id="'checkbox' + r.id" type="checkbox"
+                                                :checked="isRoleSelected(r.id)" @change="toggleRole(r.id)"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                            <label :for="'checkbox' + r.id" v-tooltip="r.description"
+                                                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{
+                                    r.name }}</label>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <Button type="submit" :text="user.loading ? 'Đang xử lý...' : 'Cập nhật '"
                                     :loading="user.loading"
                                     class="w-full bg-gray-700 text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"></Button>
                             </form>
@@ -445,16 +461,22 @@
 </template>
 <script>
 import accountService from "@/services/accountService";
+import roleService from "@/services/roleService";
 import { Notyf } from 'notyf';
 import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
+import { VTooltip } from 'v-tooltip';
 export default {
-    name: "accountView",
+    name: "rolesView",
+    directives: {
+        tooltip: VTooltip
+    },
     components: {
         Button,
         SkeletonTable
     },
     mounted() {
+        this.displayRole();
         this.loadAccounts();
     },
     computed: {
@@ -469,7 +491,8 @@ export default {
         return {
             isModalVisible: false,
             accounts: [],
-
+            roles: [],
+            displayRoles: [],
             user: {
                 userId: '...',
                 fullName: "",
@@ -498,7 +521,6 @@ export default {
                 var resp = await accountService.getAccounts(this.$store, this.filters);
                 this.accounts = resp.data.content;
                 this.filters.scope = resp.data;
-                console.log(this.filters);
             } catch (error) {
                 if (error.response && error.response.status === 403) {
                     notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
@@ -509,6 +531,7 @@ export default {
                 }
             } finally {
                 this.user.loading = false;
+
             }
         },
         prevPage() {
@@ -554,19 +577,21 @@ export default {
                 this.user = resp.data;
             } catch (error) {
                 if (error.response && error.response.status === 403) {
-                    notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+                    notyf.error('Đã xảy ra lỗi');
                 } else {
                     notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
                 }
             } finally {
+                this.getRoles();
                 this.user.loading = false;
             }
         },
-        async updateUser() {
+        async updateRole() {
             this.user.loading = true;
             var notyf = new Notyf();
             try {
-                var resp = await accountService.updateUser(this.$store, this.user.userId, this.user);
+                var roles = this.user.roles.map(role => role.name);
+                var resp = await roleService.addUserRoles(this.$store, this.user.userId, roles);
                 notyf.success(resp.message);
             } catch (error) {
                 if (error.response && error.response.status === 403) {
@@ -618,7 +643,51 @@ export default {
             } finally {
                 this.export.loading = false;
             }
+        },
+        async getRoles() {
+            var notyf = new Notyf();
+            try {
+                var resp = await roleService.getRoles(this.$store);
+                this.roles = resp.data;
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    notyf.error('Đã xảy ra lỗi');
+                } else {
+                    notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
+                }
+            }
+        },
+        async displayRole() {
+            var notyf = new Notyf();
+            try {
+                var resp = await roleService.getRoles(this.$store);
+                this.displayRoles = resp.data;
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    notyf.error('Đã xảy ra lỗi');
+                } else {
+                    notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
+                }
+            }
+        },
+        isRoleSelected(roleId) {
+
+            return this.user.roles.some(role => role.id === roleId);
+        },
+        toggleRole(roleId) {
+            const roleIndex = this.user.roles.findIndex(role => role.id === roleId);
+            if (roleIndex > -1) {
+                this.user.roles.splice(roleIndex, 1); // Xóa role nếu đã có
+            } else {
+                const roleToAdd = this.roles.find(role => role.id === roleId);
+                if (roleToAdd) {
+                    this.user.roles.push(roleToAdd); // Thêm role nếu chưa có
+                }
+            }
+            console.log(this.user.roles)
         }
+
+
     },
 }
 </script>

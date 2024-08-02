@@ -22,6 +22,25 @@ const accountService = {
             throw error;
         }
     },
+
+    async getAccountsById(store, userId) {
+        try {
+            const token = store.getters.token;
+            const url = `${API_ENDPOINT}/users/get/${userId}`;
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return {
+                message: response.data.message,
+                data: response.data.data,
+            };
+        } catch (error) {
+            console.error('Error fetching accounts:', error);
+            throw error;
+        }
+    },
     async updateUser(store, userId, updateRequest) {
         try {
             const token = store.getters.token;
@@ -60,6 +79,37 @@ const accountService = {
             };
         } catch (error) {
             console.error('Error :', error);
+            throw error;
+        }
+    }, async exportUsersToExcel(store) {
+        try {
+            const token = store.getters.token;
+            const url = `${API_ENDPOINT}/users/export`;
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                responseType: 'blob',
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error exporting users to Excel:', error);
+            throw error;
+        }
+    },
+    async exportUsersToExcelById(store, userId) {
+        try {
+            const token = store.getters.token;
+            const url = `${API_ENDPOINT}/users/export/${userId}`;
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                responseType: 'blob',
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error exporting users to Excel:', error);
             throw error;
         }
     },

@@ -36,6 +36,20 @@ const adminRoutes = [
                 }
 
             },
+            {
+                path: 'roles',
+                meta: {
+                    title: "Phân quyền - Techvibes ",
+                    description: "Techvibes ",
+                    requiresAuth: true
+                },
+                components: {
+                    default: useComponent('admin/roles'),
+                    NavAndSideBarAdmin: NavAndSideBarAdmin,
+                    footerAdmin: footerAdmin
+                }
+
+            },
 
         ]
     },
