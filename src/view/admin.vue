@@ -45,4 +45,10 @@ export default {
 .my-custom-exact-active-class {
     background-color: rgba(143, 138, 138, 0.11);
 }
+
+/* Thay đổi con trỏ chuột khi rê qua các phần tử <td> và <th> */
+td,
+th {
+    cursor: pointer;
+}
 </style>

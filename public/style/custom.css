@@ -1,0 +1,5 @@
+/* Thay đổi con trỏ chuột khi rê qua các phần tử <td> và <th> */
+td,
+th {
+  cursor: pointer;
+}

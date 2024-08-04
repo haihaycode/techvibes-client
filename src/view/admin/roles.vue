@@ -123,26 +123,47 @@
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 STT
                                             </th>
-                                            <th scope="col" colspan="2"
+                                            <th @click="changeSort('fullName')" scope="col" colspan="2"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Tên người dùng
+                                                <i v-if="filters.sortField === 'fullName'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                }">
+                                                </i> Tên người dùng
+
                                             </th>
-                                            <th scope="col"
+                                            <th @click="changeSort('email')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="filters.sortField === 'email'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                }">
+                                                </i>
                                                 Tài khoản
                                             </th>
-                                            <th scope="col"
+                                            <th @click="changeSort('createDate')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Thời gian tạo và cập nhật
+                                                <i v-if="filters.sortField === 'createDate'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                }">
+                                                </i> Thời gian tạo và cập nhật
+                                            </th>
+                                            <th @click="changeSort('userId')" scope="col"
+                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="filters.sortField === 'userId'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                }">
+                                                </i>Mã Người dùng
                                             </th>
                                             <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                # Mã
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Quyền
-                                            </th>
+                                                class="text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                Quyền </th>
                                             <th scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 Thông tin
@@ -151,9 +172,14 @@
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 Hành động
                                             </th>
-                                            <th scope="col"
+                                            <th scope="col" @click="changeSort('available')"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Trạng Thái
+                                                <i v-if="filters.sortField === 'available'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                }">
+                                                </i> Trạng Thái
                                             </th>
                                         </tr>
                                     </thead>
@@ -210,16 +236,9 @@
 
                                             <td class="p-4 space-x-2 whitespace-nowrap flex ">
                                                 <button @click="toggleModal(), getAccountsById(a.userId)"
-                                                    class="flex items-center text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                                                     type="button">
-                                                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
-                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        fill="currentColor" viewBox="0 0 24 24">
-                                                        <path fill-rule="evenodd"
-                                                            d="M5 8a4 4 0 1 1 7.796 1.263l-2.533 2.534A4 4 0 0 1 5 8Zm4.06 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h2.172a2.999 2.999 0 0 1-.114-1.588l.674-3.372a3 3 0 0 1 .82-1.533L9.06 13Zm9.032-5a2.907 2.907 0 0 0-2.056.852L9.967 14.92a1 1 0 0 0-.273.51l-.675 3.373a1 1 0 0 0 1.177 1.177l3.372-.675a1 1 0 0 0 .511-.273l6.07-6.07a2.91 2.91 0 0 0-.944-4.742A2.907 2.907 0 0 0 18.092 8Z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-                                                    <span>Cập nhật Quyền</span>
+                                                    <span> <i class="fad fa-user-tag"></i> Cập nhật Quyền</span>
                                                 </button>
 
                                                 <button @click="exportUsersToExcelById(a.userId)"
@@ -509,7 +528,9 @@ export default {
                 keyword: "",
                 page: 0,
                 limit: 5,
-                scope: ""
+                scope: "",
+                sortField: 'userId',
+                sortDirection: 'desc'
             }
         };
     },
@@ -549,6 +570,16 @@ export default {
         },
         getPhoto(photo) {
             return "http://localhost:8080/api/public/product/image/" + photo;
+        },
+        changeSort(field) {
+            if (this.filters.sortField === field) {
+                this.filters.sortDirection = this.filters.sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                this.filters.sortField = field;
+                this.filters.sortDirection = 'asc';
+            }
+            this.filters.sort = this.filters.sortField + ',' + this.filters.sortDirection;
+            this.loadAccounts();
         },
         applyFilters() {
             let appliedFilters = { ...this.filters };

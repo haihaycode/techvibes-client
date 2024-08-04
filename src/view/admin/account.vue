@@ -108,26 +108,47 @@
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 STT
                                             </th>
-                                            <th scope="col" colspan="2"
+                                            <th @click="changeSort('fullName')" scope="col" colspan="2"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Tên người dùng
+                                                <i v-if="filters.sortField === 'fullName'" :class="{
+                                        'fas': true,
+                                        'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                        'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                    }">
+                                                </i> Tên người dùng
+
                                             </th>
-                                            <th scope="col"
+                                            <th @click="changeSort('email')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="filters.sortField === 'email'" :class="{
+                                        'fas': true,
+                                        'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                        'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                    }">
+                                                </i>
                                                 Tài khoản
                                             </th>
-                                            <th scope="col"
+                                            <th @click="changeSort('createDate')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Thời gian tạo và cập nhật
+                                                <i v-if="filters.sortField === 'createDate'" :class="{
+                                        'fas': true,
+                                        'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                        'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                    }">
+                                                </i> Thời gian tạo và cập nhật
+                                            </th>
+                                            <th @click="changeSort('userId')" scope="col"
+                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="filters.sortField === 'userId'" :class="{
+                                        'fas': true,
+                                        'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                        'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                    }">
+                                                </i>Mã Người dùng
                                             </th>
                                             <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                # Mã
-                                            </th>
-                                            <th scope="col"
-                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Quyền
-                                            </th>
+                                                class="text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                Quyền </th>
                                             <th scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 Thông tin
@@ -136,9 +157,14 @@
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 Hành động
                                             </th>
-                                            <th scope="col"
+                                            <th scope="col" @click="changeSort('available')"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Trạng Thái
+                                                <i v-if="filters.sortField === 'available'" :class="{
+                                        'fas': true,
+                                        'fa-sort-amount-up': filters.sortDirection === 'asc',
+                                        'fa-sort-amount-down': filters.sortDirection === 'desc'
+                                    }">
+                                                </i> Trạng Thái
                                             </th>
                                         </tr>
                                     </thead>
@@ -486,7 +512,9 @@ export default {
                 keyword: "",
                 page: 0,
                 limit: 5,
-                scope: ""
+                scope: "",
+                sortField: 'userId',
+                sortDirection: 'desc'
             }
         };
     },
@@ -579,6 +607,16 @@ export default {
                 this.toggleModal()
                 this.user.loading = false;
             }
+        },
+        changeSort(field) {
+            if (this.filters.sortField === field) {
+                this.filters.sortDirection = this.filters.sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                this.filters.sortField = field;
+                this.filters.sortDirection = 'asc';
+            }
+            this.filters.sort = this.filters.sortField + ',' + this.filters.sortDirection;
+            this.loadAccounts();
         },
         toggleModal() {
             this.isModalVisible = !this.isModalVisible;

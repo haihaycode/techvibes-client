@@ -50,6 +50,20 @@ const adminRoutes = [
                 }
 
             },
+            {
+                path: 'favorite',
+                meta: {
+                    title: "Yêu thích - Techvibes ",
+                    description: "Techvibes ",
+                    requiresAuth: true
+                },
+                components: {
+                    default: useComponent('admin/favorite'),
+                    NavAndSideBarAdmin: NavAndSideBarAdmin,
+                    footerAdmin: footerAdmin
+                }
+
+            },
 
         ]
     },
