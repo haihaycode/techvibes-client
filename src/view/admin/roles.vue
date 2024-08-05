@@ -70,43 +70,50 @@
                         </div>
 
                         <div
-                            class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
+                            class="block sm:flex items-center justify-between sm:divide-x sm:divide-gray-100 dark:divide-gray-700">
                             <div class="flex items-center mb-4 sm:mb-0 space-x-2">
-                                <form class="sm:pr-3 flex items-center mb-4 sm:mb-0 space-x-2"
+                                <form
+                                    class="flex flex-col w-full sm:flex-row items-center space-y-4 sm:space-y-0  md:space-x-2 sm:space-x-2 sm:pr-3"
                                     @submit.prevent="applyFilters">
 
-                                    <div class="relative w-full mt-1 sm:w-64 xl:w-96">
+                                    <!-- Search Input -->
+                                    <div class="relative w-full sm:w-64 xl:w-80">
                                         <input type="text" v-model="filters.keyword" id="products-search"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Tìm kiếm người dùng">
                                     </div>
 
+                                    <!-- Role Select -->
+                                    <div class="w-full sm:w-64 xl:w-80">
+                                        <select v-model="filters.roleName"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="" selected>Quyền -- Không xét</option>
+                                            <option value="ROLE_ADMIN">Quyền admin</option>
+                                            <option value="ROLE_STAFF">Quyền Nhân viên</option>
+                                            <option value="ROLE_USER">Quyền Người dùng</option>
+                                            <option value="">Người dùng chưa xác minh</option>
+                                        </select>
+                                    </div>
 
-                                    <select v-model="filters.roleName"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="" selected>Quyền -- Không xét</option>
-                                        <option value="ROLE_ADMIN">Quyền admin</option>
-                                        <option value="ROLE_STAFF">Quyền Nhân viên</option>
-                                        <option value="ROLE_USER">Quyền Người dùng</option>
-                                        <option value="">Người dùng chưa xác minh</option>
-                                    </select>
+                                    <!-- Status Select -->
+                                    <div class="w-full sm:w-64 xl:w-80">
+                                        <select v-model="filters.available"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="" selected>Trạng thái -- không xét</option>
+                                            <option value="true">Kích hoạt</option>
+                                            <option value="false">Không kích hoạt</option>
+                                        </select>
+                                    </div>
 
-
-                                    <select v-model="filters.available"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="" selected>Trạng thái -- không xét</option>
-                                        <option value="true">Kích hoạt</option>
-                                        <option value="false">Không kích hoạt</option>
-                                    </select>
-
-
+                                    <!-- Submit Button -->
                                     <button type="submit"
-                                        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Lọc</button>
-
+                                        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                                        Lọc
+                                    </button>
                                 </form>
-
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -191,7 +198,7 @@
                                             <td>
                                                 <div
                                                     class="text-base text-center font-semibold text-gray-900 dark:text-white">
-                                                    {{ index }}
+                                                    {{ index + 1 }}
                                                 </div>
                                             </td>
                                             <td colspan="2"
@@ -302,7 +309,7 @@
                 </div>
                 <!-- phân trang và các tùy chỉnh -->
                 <div
-                    class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
+                    class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 md:space-x-2 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex items-center mb-4 sm:mb-0">
                         <a @click.prevent="prevPage"
                             class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -569,7 +576,7 @@ export default {
             }
         },
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return "http://localhost:8080/api/public/account/image/" + photo;
         },
         changeSort(field) {
             if (this.filters.sortField === field) {

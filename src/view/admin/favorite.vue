@@ -125,7 +125,7 @@
                                             <td>
                                                 <div
                                                     class="text-base text-center font-semibold text-gray-900 dark:text-white">
-                                                    {{ index }}
+                                                    {{ index + 1 }}
                                                 </div>
                                             </td>
                                             <td colspan="2"
@@ -330,7 +330,7 @@
                                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ i }}
+                                                {{ i + 1 }}
                                             </th>
                                             <td class="px-6 py-4">
                                                 {{ u.userId }}
@@ -423,7 +423,7 @@ export default {
             favorites: [],
             filters: {
                 page: 0,
-                limit: 10,
+                limit: 5,
                 scope: "",
                 sortField: 'favoriteCount',
                 sortDirection: 'desc'
