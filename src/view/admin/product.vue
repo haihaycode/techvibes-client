@@ -3,6 +3,7 @@
         <div id="main-content"
             class="relative w-full h-full overflow-y-auto overflow-x-hidden bg-gray-50 lg:ml-64 dark:bg-gray-900 mt-14">
             <main>
+
                 <div
                     class=" bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
                     <div class="w-full mb-1">
@@ -44,7 +45,7 @@
                                                     clip-rule="evenodd"></path>
                                             </svg>
                                             <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
-                                                aria-current="page"> Quản lý danh mục</span>
+                                                aria-current="page"> Quản lý sản phẩm</span>
                                         </div>
                                     </li>
                                 </ol>
@@ -53,37 +54,106 @@
                         <div
                             class="flex flex-col sm:flex-row sm:items-center sm:justify-between md:divide-x md:divide-gray-100 dark:divide-gray-700">
                             <form
-                                class="flex flex-col sm:flex-row sm:items-center space-y-4 md:space-x-2  sm:space-y-0 sm:space-x-2 w-full sm:pr-3"
+                                class="flex flex-col sm:flex-row sm:items-center space-y-4 md:space-x-2 sm:space-y-0 sm:space-x-2 w-full sm:pr-3"
                                 @submit.prevent="applyFilters">
+
                                 <div class="w-full sm:w-auto">
-                                    <input type="text" v-model="category.filters.keyword" id="products-search"
+                                    <label for="products-search"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Tìm kiếm sản phẩm
+                                    </label>
+                                    <input type="text" v-model="product.filters.keyword" id="products-search"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Tìm kiếm danh mục">
+                                        placeholder="Tìm kiếm sản phẩm">
                                 </div>
+
                                 <div class="w-full sm:w-auto">
-                                    <select v-model="category.filters.available"
+                                    <label for="availability-select"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Trạng thái
+                                    </label>
+                                    <select id="availability-select" v-model="product.filters.available"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="" selected>Trạng thái -- không xét</option>
+                                        <option value="" selected>-- không xét</option>
                                         <option value="true">Kích hoạt</option>
                                         <option value="false">Không kích hoạt</option>
                                     </select>
                                 </div>
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-2 w-full sm:w-auto">
+
+                                <div class="w-full sm:w-auto">
+                                    <label for="category-select"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Danh mục
+                                    </label>
+                                    <select id="category-select" v-model="product.filters.categoryId"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="" selected>-- không xét</option>
+                                        <option v-for="(c, i) in category.list" :key="i" :value="c.id">
+                                            {{ c.name }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="w-full sm:w-auto">
+                                    <label for="available-category-select"
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Trạng thái danh mục
+                                    </label>
+                                    <select id="available-category-select" v-model="product.filters.availableCategory"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="" selected>-- không xét</option>
+                                        <option value="true">Kích hoạt</option>
+                                        <option value="false">Không kích hoạt</option>
+                                    </select>
+                                </div>
+
+                                <div
+                                    class="flex flex-col sm:flex-row sm:items-center sm:space-x-2 md:space-x-2 w-full sm:w-auto">
                                     <div class="w-full sm:w-auto">
-                                        <input v-model="category.filters.startDate" type="datetime-local"
+                                        <label for="start-date-time"
+                                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Ngày bắt đầu
+                                        </label>
+                                        <input v-model="product.filters.startDate" type="datetime-local"
                                             id="start-date-time"
                                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     </div>
-                                    <div class="hidden sm:block px-2">
-                                        <i class="far fa-long-arrow-right"></i>
-                                    </div>
+
                                     <div class="w-full sm:w-auto">
-                                        <input v-model="category.filters.endDate" type="datetime-local"
+                                        <label for="end-date-time"
+                                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Ngày kết thúc
+                                        </label>
+                                        <input v-model="product.filters.endDate" type="datetime-local"
                                             id="end-date-time"
                                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     </div>
                                 </div>
+
+                                <div
+                                    class="flex flex-col  sm:flex-row sm:items-center sm:space-x-2 md:space-x-2 w-full sm:w-auto">
+                                    <div class="w-full sm:w-auto">
+                                        <label for="min-price"
+                                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Giá tối thiểu
+                                        </label>
+                                        <input v-model="product.filters.minPrice" type="number" id="min-price"
+                                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div class="w-full sm:w-auto">
+                                        <label for="max-price"
+                                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Giá tối đa
+                                        </label>
+                                        <input v-model="product.filters.maxPrice" type="number" id="max-price"
+                                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
+                                </div>
+
                                 <div class="w-full sm:w-auto">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Lọc các mục
+                                    </label>
                                     <button type="submit"
                                         class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                                         Lọc
@@ -94,6 +164,7 @@
 
                     </div>
                 </div>
+
                 <!-- table sản phẩm  -->
                 <div class="flex flex-col ">
                     <div class="overflow-x-auto">
@@ -106,61 +177,97 @@
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 STT
                                             </th>
-                                            <th @click="changeSort('id')" scope="col" colspan="2"
+                                            <th @click="changeSort('id')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                <i v-if="category.filters.sortField === 'id'" :class="{
+                                                <i v-if="product.filters.sortField === 'id'" :class="{
                                     'fas': true,
-                                    'fa-sort-amount-up': category.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': category.filters.sortDirection === 'desc'
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
                                 }">
-                                                </i> Mã danh mục
+                                                </i> Mã sản phẩm
 
                                             </th>
                                             <th @click="changeSort('name')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                <i v-if="category.filters.sortField === 'name'" :class="{
+                                                <i v-if="product.filters.sortField === 'name'" :class="{
                                     'fas': true,
-                                    'fa-sort-amount-up': category.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': category.filters.sortDirection === 'desc'
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
                                 }">
                                                 </i>
-                                                Tên danh mục
+                                                Tiêu đề sản phẩm
                                             </th>
-                                            <th @click="changeSort('description')" scope="col"
+                                            <th @click="changeSort('price')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                <i v-if="category.filters.sortField === 'description'" :class="{
+                                                <i v-if="product.filters.sortField === 'price'" :class="{
                                     'fas': true,
-                                    'fa-sort-amount-up': category.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': category.filters.sortDirection === 'desc'
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
                                 }">
                                                 </i>
-                                                Mô tả
+                                                Giá / 1
                                             </th>
-                                            <th @click="changeSort('updateDate')" scope="col"
+                                            <th @click="changeSort('quantity')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                <i v-if="category.filters.sortField === 'updateDate'" :class="{
+                                                <i v-if="product.filters.sortField === 'quantity'" :class="{
                                     'fas': true,
-                                    'fa-sort-amount-up': category.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': category.filters.sortDirection === 'desc'
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
                                 }">
-                                                </i> Thời gian tạo / cập nhật
+                                                </i> Số lượng hiện có
 
+                                            </th>
+                                            <th @click="changeSort('discount')" scope="col"
+                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="product.filters.sortField === 'discount'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                                }">
+                                                </i> Giảm giá (%)
+                                            </th>
+                                            <th @click="changeSort('descriptionSort')" scope="col"
+                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="product.filters.sortField === 'descriptionSort'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                                }">
+                                                </i>
+                                                Mô tả ngắn / xem thông tin mô tả
+                                            </th>
+                                            <th @click="changeSort('createDate')" scope="col"
+                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="product.filters.sortField === 'createDate'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                                }">
+                                                </i> Thời gian tạo và cập nhật
+                                            </th>
+                                            <th @click="changeSort('category.id')" scope="col"
+                                                class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                                <i v-if="product.filters.sortField === 'category.id'" :class="{
+                                    'fas': true,
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                                }">
+                                                </i> Danh mục / (id)
                                             </th>
                                             <th scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                hình ảnh danh mục
-
+                                                Giá sau khi tính cả giảm giá
                                             </th>
                                             <th scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                Thao tác
+                                                Ảnh tiêu đề sản phẩm
                                             </th>
                                             <th @click="changeSort('available')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                                <i v-if="category.filters.sortField === 'available'" :class="{
+                                                Thao tác / <i v-if="product.filters.sortField === 'available'" :class="{
                                     'fas': true,
-                                    'fa-sort-amount-up': category.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': category.filters.sortDirection === 'desc'
+                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
                                 }">
                                                 </i> Trạng thái
                                             </th>
@@ -168,8 +275,8 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-
-                                        <tr v-for="(ca, i) in category.list" :key="i"
+                                        <!-- 11 cột -->
+                                        <tr v-for="(p, i) in product.list" :key="i"
                                             class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <td>
                                                 <div
@@ -177,56 +284,90 @@
                                                     {{ i + 1 }}
                                                 </div>
                                             </td>
-                                            <td colspan="2"
+                                            <td colspan="1"
                                                 class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                 <div
                                                     class="text-base font-mono text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ ca.id }}
+                                                    {{ p.id }}
                                                 </div>
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                {{ ca.name }}
+                                                {{ p.name }}
+                                            </td>
+                                            <td
+                                                class="max-w-sm p-4 overflow-hidden text-xl font-normal text-red-500 text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                                {{ formatCurrency(p.price) }}
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                <button @click="modalUpdate(), getCategoryById(ca.id)"
-                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                                    type="button">
-
-                                                    <i class="fad fa-edit"></i> Xem thông tin chi tiết
-                                                </button>
-                                            </td>
-                                            <td
-                                                class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                {{ ca.createDate ? timeAgo(ca.createDate) : 'Chưa cập nhật' }} / {{
-                                    ca.updateDate
-                                        ? timeAgo(ca.updateDate) : 'Chưa cập nhật'
-                                }}
+                                                {{ p.quantity }}
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
 
-                                                <img v-if="ca.image" class=" w-10 h-10 rounded-full"
-                                                    :src="getPhoto(ca.image)" alt="user photo">
+                                                {{ p.discount }}
+                                            </td>
+                                            <td
+                                                class="flex max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
+                                                <div>
+                                                    {{ p.descriptionSort }}
+                                                </div>
+                                                <div>
+                                                    <button>Xem thông tin thêm</button>
+                                                </div>
+                                            </td>
+                                            <td
+                                                class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
+                                                {{ timeAgo(p.createDate) ? timeAgo(p.createDate) : 'chưa cập nhật' }} -
+                                                {{
+                                    timeAgo(p.updateDate) ?
+                                        timeAgo(p.updateDate) : 'chưa cập nhật' }}
+                                            </td>
+                                            <td
+                                                class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
+                                                {{ p.category.name }} &nbsp; ( {{ p.category.id }} )
+                                            </td>
+                                            <td
+                                                class="max-w-sm p-4 overflow-hidden text-xl font-normal  text-red-500 text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
+                                                <p>{{ formatCurrency(p.price - (p.price * (p.discount
+                                    /
+                                    100))) }} VNĐ</p>
+                                            </td>
+                                            <td
+                                                class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
+                                                <img v-if="p.image" class=" w-10 h-10 rounded-full"
+                                                    :src="getPhoto(p.image)" alt="user photo">
                                                 <img v-else class=" w-10 h-10 rounded-full"
                                                     src="https://t3.ftcdn.net/jpg/03/59/09/04/360_F_359090423_7kA3WC9HnDEf1I9dx4ccGFhhO90vmzhk.jpg"
-                                                    alt="category photo">
+                                                    alt="product photo">
                                             </td>
-                                            <td class="p-4 space-x-2 whitespace-nowrap flex ">
-                                                <button @click="modalUpdate(), getCategoryById(ca.id)"
-                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                                    type="button">
 
-                                                    <i class="fad fa-edit"></i> Cập nhật
-                                                </button>
-
-                                                <button @click="exportCategoryToExcelById(ca.id)"
-                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                                    type="button">
-                                                    <i v-if="!category.export.loading"
+                                            <td
+                                                class="max-w-sm p-4 flex overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                                <button type="button"
+                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cập
+                                                    nhật</button>
+                                                <div
+                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                                    <label :for="'toggleSwitch' + p.id"
+                                                        class="flex items-center cursor-pointer">
+                                                        <div class="relative toggle-switch">
+                                                            <input type="checkbox" :id="'toggleSwitch' + p.id"
+                                                                @click="toggleAvailability(p.id)" v-model="p.available"
+                                                                class="sr-only" />
+                                                            <div class="toggle-slider"></div>
+                                                        </div>
+                                                        <div class="ml-3 font-medium"
+                                                            :class="p.available ? 'text-green-500' : 'text-gray-700'">
+                                                            {{ p.available ? 'Kích Hoạt' : 'Khóa ' }}
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <button type="button" @click="exportProductToExcelById(p.id)"
+                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                                    <i v-if="!product.export.loading"
                                                         class="fad fa-file-excel text-2xl text-green-700"></i>
-
                                                     <div v-else role="status">
                                                         <svg aria-hidden="true"
                                                             class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
@@ -242,32 +383,13 @@
                                                         <span class="sr-only">Loading...</span>
                                                     </div>
                                                 </button>
+
+
                                             </td>
-                                            <td class="p-4 space-x-2 whitespace-nowrap">
-                                                <div
-                                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-
-                                                    <label :for="'toggleSwitch' + ca.id"
-                                                        class="flex items-center cursor-pointer">
-                                                        <div class="relative toggle-switch">
-                                                            <input type="checkbox" :id="'toggleSwitch' + ca.id"
-                                                                @click="toggleAvailability(ca.id)"
-                                                                v-model="ca.available" class="sr-only" />
-                                                            <div class="toggle-slider"></div>
-                                                        </div>
-                                                        <div class="ml-3 font-medium"
-                                                            :class="ca.available ? 'text-green-500' : 'text-gray-700'">
-                                                            {{ ca.available ? 'Kích Hoạt' : 'Khóa ' }}
-                                                        </div>
-                                                    </label>
-
-                                                </div>
-                                            </td>
-
 
 
                                         </tr>
-                                        <SkeletonTable :columns="10" :loading="category.loading" :item="4" />
+                                        <SkeletonTable :columns="10" :loading="product.loading" :item="4" />
                                     </tbody>
                                 </table>
                             </div>
@@ -290,12 +412,12 @@
 
                         <span
                             class="border border-1 mx-2 rounded-lg text-gray-900 text-sm py-2 px-3 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{
-                                    category.filters.page + 1 }} / {{ category.filters.scope ? category.filters.scope.totalPages
+                                    product.filters.page + 1 }} / {{ product.filters.scope ? product.filters.scope.totalPages
                                     : "" }}
                         </span>
                         <form class="max-w-sm mx-auto flex items-center">
 
-                            <select id="limit" v-model="category.filters.limit" @change="loadCategory"
+                            <select id="limit" v-model="product.filters.limit" @change="loadProducts"
                                 class="border border-1 mx-2 rounded-lg text-gray-900 text-sm  block w-full ">
                                 <option value="5">5 Đối tượng</option>
                                 <option value="10">10 Đối tượng</option>
@@ -305,10 +427,10 @@
                             </select>
                         </form>
                         <button data-tooltip-target="tooltip-hover" data-tooltip-trigger="hover" type="button"
-                            @click="exportCategoryToExcel"
+                            @click="exportProductsToExcel"
                             class="border border-2 hover:bg-gray-100 mx-2 rounded-lg text-gray-900 ">
 
-                            <svg v-if="!this.category.export.loading" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                            <svg v-if="!this.product.export.loading" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                 width="100" height="40" viewBox="0 0 48 48">
                                 <path fill="#4CAF50"
                                     d="M41,10H25v28h16c0.553,0,1-0.447,1-1V11C42,10.447,41.553,10,41,10z"></path>
@@ -357,7 +479,7 @@
 
                     </div>
                     <div class="flex items-center space-x-3">
-                        <button @click="modalUpdate"
+                        <button
                             class=" px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                             type="button">
                             <i class="fal fa-folder-plus"></i> Thêm danh mục
@@ -388,80 +510,7 @@
                     </div>
                 </div>
                 <!--  crud -->
-                <div v-if="isModalVisible" id="exampleModalScrollable" tabindex="-1"
-                    aria-labelledby="exampleModalScrollableLabel"
-                    class="z-40 fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden mx-auto overflow-y-auto">
-                    <div class="fixed inset-0 bg-gray-500" style="background-color: #ccccccd0;">
-                    </div>
-                    <div
-                        class="relative p-4 w-full mt-10 mx-auto max-w-3xl bg-white rounded-lg shadow dark:bg-gray-700 ">
-                        <!-- Modal header -->
-                        <div
-                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Cập nhật danh mục # {{ category.newCategory.object.id }}
-                            </h3>
-                            <button type="button"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                @click="modalUpdate">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="p-4 md:p-5 space-y-4">
-                            <DefaultSkeleton :loading="category.newCategory.loading" />
-                            <form v-if="!category.newCategory.loading" @submit.prevent="newOrUpdateCategory"
-                                enctype="multipart/form-data">
-                                <!-- Tên danh mục -->
-                                <div class="mb-4">
-                                    <label for="name" class="block text-sm font-medium text-gray-700">Tên danh
-                                        mục</label>
-                                    <input type="text" id="name" v-model="category.newCategory.object.name"
-                                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        placeholder="Nhập tên danh mục" required />
-                                </div>
 
-                                <!-- Mô tả -->
-                                <div class="mb-4">
-                                    <label for="description" class="block text-sm font-medium text-gray-700">Mô
-                                        tả</label>
-                                    <div>
-                                        <CKEditorComponent id="description"
-                                            v-model="category.newCategory.object.description"
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                            placeholder="Nhập mô tả" rows="4" required>
-                                        </CKEditorComponent>
-                                    </div>
-                                </div>
-
-                                <!-- Hình ảnh -->
-                                <div class="mb-4">
-                                    <label for="file" class="block text-sm font-medium text-gray-700">Hình ảnh</label>
-                                    <input type="file" id="file" @change="handleFileChange"
-                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                                </div>
-
-                                <!-- Nút gửi -->
-                                <button type="submit"
-                                    class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                                    {{ category.newCategory.object.id ? 'Cập nhật' : 'Thêm' }}
-                                </button>
-                            </form>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <button @click="modalUpdate" type="button"
-                                class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                Đóng
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
 
 
@@ -470,25 +519,19 @@
     </div>
 </template>
 <script>
+import productService from '@/services/productService';
 import categoryService from '@/services/categoryService';
 import { Notyf } from 'notyf';
 import SkeletonTable from '@/components/SkeletonTable.vue';
-import DefaultSkeleton from '@/components/defaultSekeleton.vue';
-import CKEditorComponent from '@/components/CKEditor.vue';
-import { timeAgo } from '@/utils/utils';
-
+import { formatCurrency, timeAgo } from '@/utils/utils';
 export default {
-    name: "categoryComponent",
+    name: 'productView',
     components: {
-        CKEditorComponent,
-        SkeletonTable,
-        DefaultSkeleton,
-
+        SkeletonTable
     },
     data() {
         return {
-            isModalVisible: false,
-            category: {
+            product: {
                 list: [],
                 loading: false,
                 filters: {
@@ -498,32 +541,36 @@ export default {
                     scope: "",
                     sortField: 'id',
                     sortDirection: 'desc',
-
                 },
                 export: {
                     loading: false,
                 },
-                newCategory: {
+                productEditor: {
                     loading: false,
                     object: {
-                        id: '',
-                        name: '',
-                        description: '',
-                        file: null
 
                     }
                 }
             },
+            category: {
+                loading: false,
+                list: [],
+                filters: {
+                    limit: 1000
+                }
+            }
 
         }
     },
     mounted() {
+        this.loadProducts();
         this.loadCategory();
     },
     methods: {
         timeAgo,
+        formatCurrency,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/category/image/" + photo;
+            return "http://localhost:8080/api/public/product/image/" + photo;
         },
         async loadCategory() {
             this.category.loading = true;
@@ -531,7 +578,6 @@ export default {
             try {
                 var resp = await categoryService.getCategory(this.$store, this.category.filters);
                 this.category.list = resp.data.content;
-                this.category.filters.scope = resp.data;
             } catch (error) {
                 if (error.response && error.response.status === 403) {
                     notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
@@ -545,7 +591,7 @@ export default {
             }
         },
         applyFilters() {
-            let appliedFilters = { ...this.category.filters };
+            let appliedFilters = { ...this.product.filters };
             if (appliedFilters.startDate) {
                 const startDate = new Date(appliedFilters.startDate);
                 appliedFilters.startDate = startDate.toISOString().slice(0, 19);  // Chuyển đổi thành định dạng yyyy-MM-ddThh:mm:ss
@@ -561,36 +607,101 @@ export default {
             if (!appliedFilters.available) {
                 delete appliedFilters.available;
             }
-            this.category.filters = appliedFilters;
-            this.loadCategory();
+            if (!appliedFilters.availableCategory) {
+                delete appliedFilters.availableCategory;
+            }
+            if (!appliedFilters.categoryId) {
+                delete appliedFilters.categoryId;
+            }
+            if (!appliedFilters.minPrice) {
+                delete appliedFilters.minPrice;
+            }
+            if (!appliedFilters.maxPrice) {
+                delete appliedFilters.maxPrice;
+            }
+            this.product.filters = appliedFilters;
+            this.loadProducts();
+        },
+        async loadProducts() {
+            this.product.loading = true;
+            var notyf = new Notyf();
+            try {
+                var resp = await productService.getAllProducts(this.$store, this.product.filters);
+                this.product.list = resp.data.content;
+                this.product.filters.scope = resp.data;
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+                    await this.logoutUser();
+                    this.$router.push('/login?session_expired=true');
+                } else {
+                    notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
+                }
+            } finally {
+                this.product.loading = false;
+            }
+        }, changeSort(field) {
+            if (this.product.filters.sortField === field) {
+                this.product.filters.sortDirection = this.product.filters.sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                this.product.filters.sortField = field;
+                this.product.filters.sortDirection = 'asc';
+            }
+            this.product.filters.sort = this.product.filters.sortField + ',' + this.product.filters.sortDirection;
+            this.loadProducts();
         },
         prevPage() {
-            if (this.category.filters.page > 0) {
-                this.category.filters.page--;
-                this.loadCategory();
+            if (this.product.filters.page > 0) {
+                this.product.filters.page--;
+                this.loadProducts();
             }
         },
         nextPage() {
-            const maxPage = Math.ceil(this.category.filters.scope.totalElements / this.category.filters.limit);
-            if (this.category.filters.page < maxPage - 1) {
-                this.category.filters.page++;
-                this.loadCategory();
+            const maxPage = Math.ceil(this.product.filters.scope.totalElements / this.product.filters.limit);
+            if (this.product.filters.page < maxPage - 1) {
+                this.product.filters.page++;
+                this.loadProducts();
             }
         },
-        changeSort(field) {
-            if (this.category.filters.sortField === field) {
-                this.category.filters.sortDirection = this.category.filters.sortDirection === 'asc' ? 'desc' : 'asc';
-            } else {
-                this.category.filters.sortField = field;
-                this.category.filters.sortDirection = 'asc';
+        async exportProductsToExcel() {
+            this.product.export.loading = true;
+            const notyf = new Notyf();
+            try {
+                const data = await productService.exportProductsToExcel(this.$store);
+                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'products.xlsx');
+                document.body.appendChild(link);
+                link.click();
+                notyf.success('Xuất excel thành công');
+            } catch (error) {
+                notyf.error('Có lỗi xảy ra');
+            } finally {
+                this.product.export.loading = false;
             }
-            this.category.filters.sort = this.category.filters.sortField + ',' + this.category.filters.sortDirection;
-            this.loadCategory();
+        }, async exportProductToExcelById(id) {
+            this.product.export.loading = true;
+            const notyf = new Notyf();
+            try {
+                const data = await productService.exportProductToExcelById(this.$store, id);
+                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'category_' + id + '.xlsx');
+                document.body.appendChild(link);
+                link.click();
+                notyf.success('Xuất excel thành công');
+            } catch (error) {
+                notyf.error('Có lỗi xảy ra');
+            } finally {
+                this.product.export.loading = false;
+            }
         },
         async toggleAvailability(id) {
             var notyf = new Notyf();
             try {
-                var resp = await categoryService.toggleAvailability(this.$store, id);
+                var resp = await productService.toggleAvailability(this.$store, id);
                 notyf.success(resp.message);
             } catch (error) {
                 if (error.response && error.response.status === 403) {
@@ -600,121 +711,9 @@ export default {
                 }
             }
         },
-        async exportCategoryToExcel() {
-            this.category.export.loading = true;
-            const notyf = new Notyf();
-            try {
-                const data = await categoryService.exportCategoryToExcel(this.$store);
-                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'category.xlsx');
-                document.body.appendChild(link);
-                link.click();
-                notyf.success('Xuất excel thành công');
-            } catch (error) {
-                notyf.error('Có lỗi xảy ra');
-            } finally {
-                this.category.export.loading = false;
-            }
-        }, async exportCategoryToExcelById(userId) {
-            this.category.export.loading = true;
-            const notyf = new Notyf();
-            try {
-                const data = await categoryService.exportCategoryToExcelById(this.$store, userId);
-                const url = window.URL.createObjectURL(new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'category_' + userId + '.xlsx');
-                document.body.appendChild(link);
-                link.click();
-                notyf.success('Xuất excel thành công');
-            } catch (error) {
-                notyf.error('Có lỗi xảy ra');
-            } finally {
-                this.category.export.loading = false;
-            }
-        },
-        modalUpdate() {
-            if (this.isModalVisible) {
-                this.resetForm();
-            }
-            this.isModalVisible = !this.isModalVisible;
-        },
-        async getCategoryById(userId) {
-            this.category.newCategory.loading = true;
-            var notyf = new Notyf();
-            try {
-                var resp = await categoryService.getCategoryById(this.$store, userId);
-                this.category.newCategory.object = resp.data;
-            } catch (error) {
-                if (error.response && error.response.status === 403) {
-                    notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
-                } else {
-                    notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
-                }
-            } finally {
-                this.category.newCategory.loading = false;
-            }
-        },
-        resetForm() {
-            this.category.newCategory.object = {
-                id: null,
-                name: '',
-                description: '',
-                image: '',
-            };
-        },
-        handleFileChange(event) {
-            this.category.newCategory.object.file = event.target.files[0];
-        },
-        async newOrUpdateCategory() {
-
-            if (this.category.newCategory.object.id) {
-                this.category.newCategory.loading = true;
-                let notyf = new Notyf();
-                try {
-                    let resp = await categoryService.updateCategory(this.$store, this.category.newCategory.object);
-                    notyf.success(resp);
-
-                } catch (error) {
-                    if (error.response && error.response.status === 403) {
-                        notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
-                    } else {
-                        notyf.error(error);
-                    }
-                } finally {
-                    this.category.newCategory.loading = false;
-                    this.resetForm();
-                    this.modalUpdate();
-                    this.loadCategory();
-                }
-            } else {
-                let notyf = new Notyf();
-                this.category.newCategory.loading = true;
-                try {
-                    let resp = await categoryService.newCategory(this.$store, this.category.newCategory.object);
-                    notyf.success(resp);
-                } catch (error) {
-                    if (error.response && error.response.status === 403) {
-                        notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
-                    } else {
-                        notyf.error(error);
-                    }
-                } finally {
-                    this.category.newCategory.loading = false;
-                    this.resetForm();
-                    this.modalUpdate();
-                    this.loadCategory();
-                }
-            }
-        }
-    },
-
+    }
 }
-
 </script>
-
 
 <style>
 .sr-only {

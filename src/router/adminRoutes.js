@@ -78,6 +78,20 @@ const adminRoutes = [
                 }
 
             },
+            {
+                path: 'product',
+                meta: {
+                    title: "Quản lý sản phẩm - Techvibes ",
+                    description: "Techvibes ",
+                    requiresAuth: true
+                },
+                components: {
+                    default: useComponent('admin/product'),
+                    NavAndSideBarAdmin: NavAndSideBarAdmin,
+                    footerAdmin: footerAdmin
+                }
+
+            },
 
         ]
     },

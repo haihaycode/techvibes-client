@@ -408,6 +408,7 @@
 import { Notyf } from 'notyf';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 import favoriteService from '@/services/favoriteService';
+import { timeAgo } from '@/utils/utils';
 export default {
     name: "favoriteView",
     components: {
@@ -445,6 +446,7 @@ export default {
         };
     },
     methods: {
+        timeAgo,
         async loadFavorite() {
             this.loading = true;
             var notyf = new Notyf();

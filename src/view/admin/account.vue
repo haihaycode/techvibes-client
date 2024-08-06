@@ -206,7 +206,9 @@
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                {{ a.createDate }}/ {{ a.updateDate ? a.updateDate : 'chưa cập nhật' }}
+                                                {{ timeAgo(a.createDate) }} / {{ a.updateDate ?
+                                        timeAgo(a.updateDate) :
+                                        'chưa cập nhật' }}
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
@@ -481,6 +483,8 @@ import accountService from "@/services/accountService";
 import { Notyf } from 'notyf';
 import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
+import { timeAgo } from '@/utils/utils';
+
 export default {
     name: "accountView",
     components: {
@@ -526,6 +530,7 @@ export default {
         };
     },
     methods: {
+        timeAgo,
         async loadAccounts() {
             this.user.loading = true;
             var notyf = new Notyf();

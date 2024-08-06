@@ -18,7 +18,6 @@
 export default {
     name: "buttonComponent",
     props: {
-
         text: {
             type: String,
             default: 'Button'
