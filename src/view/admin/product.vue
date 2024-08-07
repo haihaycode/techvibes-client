@@ -3,7 +3,7 @@
         <div id="main-content"
             class="relative w-full h-full overflow-y-auto overflow-x-hidden bg-gray-50 lg:ml-64 dark:bg-gray-900 mt-14">
             <main>
-
+                <!-- bộ lọc -->
                 <div
                     class=" bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
                     <div class="w-full mb-1">
@@ -97,7 +97,7 @@
                                 <div class="w-full sm:w-auto">
                                     <label for="available-category-select"
                                         class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Trạng thái danh mục
+                                        TT danh mục
                                     </label>
                                     <select id="available-category-select" v-model="product.filters.availableCategory"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -152,7 +152,7 @@
 
                                 <div class="w-full sm:w-auto">
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Lọc các mục
+                                        <i class="fad fa-file-search"></i>
                                     </label>
                                     <button type="submit"
                                         class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
@@ -164,7 +164,6 @@
 
                     </div>
                 </div>
-
                 <!-- table sản phẩm  -->
                 <div class="flex flex-col ">
                     <div class="overflow-x-auto">
@@ -345,7 +344,7 @@
 
                                             <td
                                                 class="max-w-sm p-4 flex overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                <button type="button"
+                                                <button type="button" @click="modalUpdate(), getProductById(p.id)"
                                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cập
                                                     nhật</button>
                                                 <div
@@ -479,10 +478,10 @@
 
                     </div>
                     <div class="flex items-center space-x-3">
-                        <button
+                        <button @click="modalUpdate"
                             class=" px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                             type="button">
-                            <i class="fal fa-folder-plus"></i> Thêm danh mục
+                            <i class="fal fa-folder-plus"></i> Thêm sản phẩm
                         </button>
 
                         <a @click.prevent="prevPage"
@@ -510,10 +509,176 @@
                     </div>
                 </div>
                 <!--  crud -->
+                <div v-if="isModalVisible" id="exampleModalScrollable" tabindex="-1"
+                    aria-labelledby="exampleModalScrollableLabel"
+                    class="z-40 fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden mx-auto overflow-y-auto">
+                    <div class="fixed inset-0 bg-gray-500" style="background-color: #ccccccd0;">
+                    </div>
+                    <div
+                        class="relative p-4 w-full mt-10 mx-auto max-w-3xl bg-white rounded-lg shadow dark:bg-gray-700 ">
+                        <!-- Modal header -->
+                        <div
+                            class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                {{ product.productEditor.object.id ? 'Cập nhật sản phẩm : ' +
+                                    product.productEditor.object.id :
+                                    'Tạo mới sản phẩm' }}
+                            </h3>
+                            <button type="button"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                @click="modalUpdate">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-4 md:p-5 space-y-4">
+                            <DefaultSkeleton :loading="product.productEditor.loading" />
+                            <form v-if="!product.productEditor.loading" @submit.prevent="newOrUpdateProduct"
+                                enctype="multipart/form-data">
+
+
+                                <!-- Tên sản phẩm -->
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Tên sản
+                                        phẩm</label>
+                                    <input v-model="product.productEditor.object.name" type="text" id="name" name="name"
+                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                        required />
+                                </div>
+
+                                <!-- Giá -->
+                                <div>
+                                    <label for="price" class="block text-sm font-medium text-gray-700">Giá*
+                                        (VNĐ)</label>
+                                    <input v-model="product.productEditor.object.price" type="number" id="price"
+                                        name="price"
+                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                        required />
+                                </div>
 
 
 
+                                <!-- Mô tả ngắn gọn -->
+                                <div>
+                                    <label for="descriptionSort" class="block text-sm font-medium text-gray-700">Mô tả
+                                        ngắn gọn (Không khả dụng HTML)</label>
+                                    <textarea v-model="product.productEditor.object.descriptionSort"
+                                        id="descriptionSort" name="descriptionSort"
+                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                        required></textarea>
+                                </div>
 
+                                <!-- ID danh mục -->
+                                <div>
+                                    <label for="categoryId" class="block text-sm font-medium text-gray-700">ID danh
+                                        mục</label>
+
+                                    <select id="category-select" v-model="product.productEditor.object.category.id"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option v-for="(c, i) in category.list" :key="i" :value="c.id">
+                                            {{ c.name }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <!-- Số lượng -->
+                                <div>
+                                    <label for="quantity" class="block text-sm font-medium text-gray-700">Số
+                                        lượng</label>
+                                    <input v-model="product.productEditor.object.quantity" type="number" id="quantity"
+                                        name="quantity"
+                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                        required />
+                                </div>
+
+                                <!-- Giảm giá -->
+                                <div>
+                                    <label for="discount" class="block text-sm font-medium text-gray-700">Giảm
+                                        giá</label>
+                                    <input v-model="product.productEditor.object.discount" type="number" id="discount"
+                                        name="discount"
+                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                        required />
+                                </div>
+
+                                <div>
+                                    <label for="description" class="block text-sm font-medium text-gray-700">Ước tính
+                                        giá trị thực tế</label>
+                                    <div
+                                        class="mt-1 p-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                        {{ formatCurrency(product.productEditor.object.price -
+                                    (product.productEditor.object.price * (product.productEditor.object.discount
+                                        /
+                                        100))) }}</div>
+                                </div>
+                                <!-- Hình ảnh -->
+                                <div class="mb-4">
+                                    <label for="file" class="block text-sm font-medium text-gray-700">Hình ảnh</label>
+                                    <input type="file" id="file" @change="handleFileChange"
+                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                                </div>
+
+                                <!-- Mô tả -->
+                                <div>
+                                    <label for="description" class="block text-sm font-medium text-gray-700">Mô
+                                        tả (HTML)</label>
+                                    <CKEditorComponent v-model="product.productEditor.object.description"
+                                        id="description" name="description"
+                                        class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                        required></CKEditorComponent>
+                                </div>
+
+                                <!-- Nút gửi -->
+                                <button type="submit"
+                                    class="mt-3 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                    {{ product.productEditor.object.id ? 'Cập nhật' : 'Thêm' }}
+                                </button>
+                            </form>
+
+                            <div>
+                                <form @submit.prevent="confirmUpload">
+                                    <div class="mb-4">
+                                        <label for="file" class="block text-sm font-medium text-gray-700">Upload Excel
+                                            File</label>
+                                        <input type="file" id="file" ref="fileInput" @change="handleFileChangeImport"
+                                            class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                                    </div>
+
+                                    <div v-if="product.import.xmlContent">
+                                        <h3 class="text-lg font-medium text-gray-900">File Preview:</h3>
+                                        <pre class="mt-2 p-2 bg-gray-100 border border-gray-300 rounded"
+                                            v-html="product.import.xmlContent"></pre>
+                                    </div>
+
+                                    <div v-if="product.import.file">
+                                        <button type="button" @click="confirmUpload"
+                                            class="mt-3 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                                            Cập nhật
+                                        </button>
+                                        <button type="button" @click="cancelUpload"
+                                            class="mt-3 text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-2">
+                                            Hủy
+                                        </button>
+                                    </div>
+
+                                    <p v-if="product.import.message">{{ product.import.message }}</p>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                            <button @click="modalUpdate" type="button"
+                                class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                Đóng
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
@@ -523,14 +688,33 @@ import productService from '@/services/productService';
 import categoryService from '@/services/categoryService';
 import { Notyf } from 'notyf';
 import SkeletonTable from '@/components/SkeletonTable.vue';
+import DefaultSkeleton from '@/components/defaultSekeleton.vue';
 import { formatCurrency, timeAgo } from '@/utils/utils';
+import CKEditorComponent from '@/components/CKEditor.vue';
+
+import { readXMLFile } from '@/utils/xmlService';
+
+import * as Yup from 'yup';
 export default {
     name: 'productView',
     components: {
-        SkeletonTable
+        CKEditorComponent,
+        SkeletonTable,
+        DefaultSkeleton
     },
     data() {
+        const schema = Yup.object().shape({
+            name: Yup.string().required('Tên sản phẩm là bắt buộc'),
+            price: Yup.number().required('Giá sản phẩm là bắt buộc').positive('Giá phải là số dương'),
+            description: Yup.string().required('Mô tả là bắt buộc'),
+            descriptionSort: Yup.string().required('Mô tả ngắn gọn là bắt buộc'),
+            categoryId: Yup.number().required('Danh mục là bắt buộc').positive('ID danh mục phải là số dương'),
+            quantity: Yup.number().required('Số lượng là bắt buộc').positive('Số lượng phải là số dương'),
+            discount: Yup.number().required('Giảm giá là bắt buộc').min(0, 'Giảm giá không được nhỏ hơn 0').max(100, 'Giảm giá không được lớn hơn 100')
+        });
         return {
+            schema,
+            isModalVisible: false,
             product: {
                 list: [],
                 loading: false,
@@ -539,16 +723,32 @@ export default {
                     page: 0,
                     limit: 5,
                     scope: "",
-                    sortField: 'id',
-                    sortDirection: 'desc',
+                    sortField: 'createDate',
+                    sortDirection: 'desc'
                 },
                 export: {
                     loading: false,
                 },
+                import: {
+                    file: null,
+                    xmlContent: '',
+                    message: '',
+                },
                 productEditor: {
                     loading: false,
                     object: {
-
+                        id: '',
+                        name: '',                // String
+                        price: 0,                // Long
+                        description: '',         // String
+                        descriptionSort: '',     // String
+                        categoryId: 0,           // Long
+                        quantity: 0,             // Long
+                        discount: 0,
+                        file: null,
+                        category: {
+                            id: 1,
+                        }             // Long
                     }
                 }
             },
@@ -572,6 +772,21 @@ export default {
         getPhoto(photo) {
             return "http://localhost:8080/api/public/product/image/" + photo;
         },
+        resetForm() {
+            this.product.productEditor.object = {
+                id: '',
+                name: '',                // String
+                price: 0,                // Long
+                description: '',         // String
+                descriptionSort: '',     // String
+                categoryId: null,           // Long
+                quantity: 0,             // Long
+                discount: 0,
+                category: {
+                    id: 1,
+                }              // Long
+            }
+        },
         async loadCategory() {
             this.category.loading = true;
             var notyf = new Notyf();
@@ -589,6 +804,33 @@ export default {
             } finally {
                 this.category.loading = false;
             }
+        },
+        async getProductById(id) {
+            this.product.productEditor.loading = true;
+            var notyf = new Notyf();
+            try {
+                var resp = await productService.getProductById(this.$store, id);
+                this.product.productEditor.object = resp.data;
+                console.log(this.product.productEditor.object);
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+                } else {
+                    notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
+                }
+            } finally {
+                this.product.productEditor.loading = false;
+            }
+        },
+        modalUpdate() {
+            console.log(this.product.productEditor.object);
+            if (this.isModalVisible) {
+                this.resetForm();
+            }
+            this.isModalVisible = !this.isModalVisible;
+        },
+        handleFileChange(event) {
+            this.product.productEditor.object.file = event.target.files[0];
         },
         applyFilters() {
             let appliedFilters = { ...this.product.filters };
@@ -640,7 +882,8 @@ export default {
             } finally {
                 this.product.loading = false;
             }
-        }, changeSort(field) {
+        },
+        changeSort(field) {
             if (this.product.filters.sortField === field) {
                 this.product.filters.sortDirection = this.product.filters.sortDirection === 'asc' ? 'desc' : 'asc';
             } else {
@@ -680,7 +923,8 @@ export default {
             } finally {
                 this.product.export.loading = false;
             }
-        }, async exportProductToExcelById(id) {
+        },
+        async exportProductToExcelById(id) {
             this.product.export.loading = true;
             const notyf = new Notyf();
             try {
@@ -711,8 +955,81 @@ export default {
                 }
             }
         },
-    }
+        async newOrUpdateProduct() {
+            if (this.product.productEditor.object.id) {
+                this.product.productEditor.loading = true;
+                let notyf = new Notyf();
+                try {
+                    let resp = await productService.updateProduct(this.$store, this.product.productEditor.object);
+                    notyf.success(resp);
+                } catch (error) {
+                    if (error.response && error.response.status === 403) {
+                        notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+                    } else {
+                        notyf.error(error);
+                    }
+                } finally {
+                    this.product.productEditor.loading = false;
+                    this.resetForm();
+                    this.modalUpdate();
+                    this.loadProducts();
+                }
+            } else {
+                let notyf = new Notyf();
+                this.product.productEditor.loading = true;
+                try {
+                    let resp = await productService.createProduct(this.$store, this.product.productEditor.object);
+                    notyf.success(resp);
+                } catch (error) {
+                    if (error.response && error.response.status === 403) {
+                        notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+                    } else {
+                        notyf.error(error);
+                    }
+                } finally {
+                    this.product.productEditor.loading = false;
+                    this.resetForm();
+                    this.modalUpdate();
+                    this.loadProducts();
+                }
+            }
+        },
+        async handleFileChangeImport(event) {
+            this.product.import.file = event.target.files[0];
+            try {
+                const xml = await readXMLFile(this.product.import.file);
+                this.product.import.xmlContent = new XMLSerializer().serializeToString(xml.documentElement);
+                this.product.import.message = '';
+            } catch (error) {
+                console.error(error);
+                this.product.import.message = 'Failed to read file: ' + error.message;
+                this.product.import.xmlContent = ''; // Clear the previous content in case of error
+            }
+        },
+        async confirmUpload() {
+            if (!this.product.import.file) {
+                this.product.import.message = 'Please select a file first';
+                return;
+            }
+
+            try {
+                const response = await productService.importExcel(this.$store, this.product.import.file);
+                this.product.import.message = response;
+                this.product.import.file = null;
+                this.product.import.xmlContent = '';
+            } catch (error) {
+                console.error(error);
+                this.message = 'Failed to upload file';
+            }
+        },
+        cancelUpload() {
+            this.product.import.file = null;
+            this.product.import.xmlContent = '';
+            this.product.import.message = 'Upload canceled';
+        },
+    },
 }
+
 </script>
 
 <style>

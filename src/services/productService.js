@@ -87,5 +87,89 @@ const productService = {
             throw error;
         }
     },
+    async updateProduct(store, product) {
+        try {
+            const token = store.getters.token;
+            const url = `${API_ENDPOINT}/product/${product.id}`;
+            let formData = new FormData();
+            let productUpdate = {
+                name: product.name,
+                price: product.price,
+                description: product.description,
+                descriptionSort: product.descriptionSort,
+                categoryId: product.category.id,
+                quantity: product.quantity,
+                discount: product.discount,
+
+            };
+            formData.append('request', new Blob([JSON.stringify(productUpdate)], { type: "application/json" }));
+            if (product.file) {
+                formData.append('file', product.file);
+            }
+            const response = await axios.put(url, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+
+            });
+
+            return {
+                message: response.data.message,
+            };
+        } catch (error) {
+            console.error('Error updating category:', error);
+            throw error;
+        }
+    },
+    async createProduct(store, product) {
+        try {
+            const token = store.getters.token;
+            const url = `${API_ENDPOINT}/product`;
+            let formData = new FormData();
+            let productUpdate = {
+                name: product.name,
+                price: product.price,
+                description: product.description,
+                descriptionSort: product.descriptionSort,
+                categoryId: product.category.id,
+                quantity: product.quantity,
+                discount: product.discount,
+
+            };
+            formData.append('request', new Blob([JSON.stringify(productUpdate)], { type: "application/json" }));
+            if (product.file) {
+                formData.append('file', product.file);
+            }
+            const response = await axios.post(url, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+
+            });
+
+            return {
+                message: response.data.message,
+            };
+        } catch (error) {
+            console.error('Error updating category:', error);
+            throw error;
+        }
+    },
+    async importExcel(store, file) {
+        const token = store.getters.token;
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await axios.post(`${API_ENDPOINT}/product/import/excel`, formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return response.data.message;
+    }
 }
 export default productService;
