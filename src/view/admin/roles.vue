@@ -730,7 +730,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .sr-only {
     position: absolute;
     width: 1px;

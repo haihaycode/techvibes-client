@@ -74,6 +74,8 @@
                     <p><router-link to="/forgot-password" class="text-black hover:underline">Quên mật khẩu
                             ?</router-link>
                     </p>
+                    <p><router-link to="/" class="text-black hover:underline">\</router-link>
+                    </p>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 const API_ENDPOINT = 'http://localhost:8080/api/admin';
+const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api';
 const productService = {
     async getAllProducts(store, params) {
         try {
@@ -170,6 +171,22 @@ const productService = {
         });
 
         return response.data.message;
-    }
+    },
+
+    //người dùng 
+    async fetchProduct(params) {
+        try {
+            const queryString = new URLSearchParams(params).toString();
+            const url = `${API_ENDPOINT_PUBLIC}/public/product?${queryString}`;
+            const response = await axios.get(url);
+            return {
+                message: response.data.message,
+                data: response.data.data,
+            };
+        } catch (error) {
+            console.error('Error fetching favorites:', error);
+            throw error;
+        }
+    },
 }
 export default productService;

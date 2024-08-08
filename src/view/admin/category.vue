@@ -91,7 +91,6 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
                 <!-- table sản phẩm  -->
@@ -713,7 +712,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .sr-only {
     position: absolute;
     width: 1px;

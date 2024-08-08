@@ -15,7 +15,7 @@ const authRoutes = [
                     description: "Techvibes "
                 },
                 components: {
-                    default: useComponent('auth/home'),
+                    default: useComponent('home'),
                     header: header,
                     footer: footer
                 }
