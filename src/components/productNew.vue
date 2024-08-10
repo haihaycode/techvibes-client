@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto px-4 mt-2">
+    <div class="container mx-auto px-1 mt-2">
         <div class="flex justify-between items-center bg-red-500 text-white py-2 px-4 rounded">
             <h2 class="text-lg font-bold">Các sản phẩm mới </h2>
             <div class="countdown">
@@ -27,13 +27,15 @@
                         <p class="text-gray-600 text-sm mb-2 truncate">{{ p.descriptionSort }}</p>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
-                                <button class="text-red-600 flex items-center px-3 py-2 rounded-full bg-gray-100">
+                                <button @click="addtocart(p.id)"
+                                    class="text-red-600 flex items-center px-3 py-2 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white">
                                     <span class="material-icons"></span>
                                     Thêm vào giỏ hàng &nbsp;
 
                                 </button>
                             </div>
-                            <button class="text-red-600 flex items-center px-3 py-2 rounded-full bg-red-100">
+                            <button @click="addToFavorites(p.id)"
+                                class="text-red-600 flex items-center px-3 py-2 rounded-full bg-red-100 ">
                                 <span class="material-icons"></span>
                                 <i class="far fa-heart text-red-500 "></i>
                             </button>
@@ -58,7 +60,9 @@
 <script>
 import productService from '@/services/productService';
 import { Notyf } from 'notyf';
+import favoriteService from '@/services/favoriteService';
 import { formatCurrency, timeAgo } from '@/utils/utils';
+import CartService from '@/services/cartService';
 export default {
     name: "productNew",
     data() {
@@ -82,6 +86,21 @@ export default {
         timeAgo,
         getPhoto(photo) {
             return "http://localhost:8080/api/public/product/image/" + photo;
+        },
+        async addtocart(itemId) {
+            try {
+                await CartService.addItemToCart(this.$store, itemId, 1);
+            } catch (error) {
+                console.error("Error updating item quantity:", error);
+            }
+        },
+        async addToFavorites(productId) {
+            try {
+                // Gọi service và truyền vào id sản phẩm
+                await favoriteService.favorite(this.$store, productId);
+            } catch (error) {
+                console.error('Error adding to favorites:', error);
+            }
         },
         async loadProducts(limit) {
             this.loading = true;

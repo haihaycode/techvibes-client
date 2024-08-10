@@ -1,12 +1,12 @@
 <template>
-    <nav aria-label="breadcrumb" class="shadow-xl px-4">
+    <nav aria-label="breadcrumb" class="shadow-xl px-12">
         <ol class="flex space-x-4 px-2 py-1">
             <li v-for="(crumb, index) in crumbs" :key="index" class="flex items-center ">
                 <router-link v-if="crumb.link" :to="crumb.link" class="text-gray-600 hover:text-blue-800"
                     style="color: black !important;">
                     {{ crumb.text }}
                 </router-link>
-                <span v-else class="text-black-500">
+                <span v-else class="text-red-500">
                     {{ crumb.text }}
                 </span>
                 <svg v-if="index < crumbs.length - 1" class="w-4 h-4 text-gray-400 mx-2"

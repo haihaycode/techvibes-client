@@ -188,5 +188,19 @@ const productService = {
             throw error;
         }
     },
+    async fetchProductByID(id) {
+        try {
+
+            const url = `${API_ENDPOINT_PUBLIC}/public/product/${id}`;
+            const response = await axios.get(url);
+            return {
+                message: response.data.message,
+                data: response.data.data,
+            };
+        } catch (error) {
+            console.error('Error fetching favorites:', error);
+            throw error;
+        }
+    },
 }
 export default productService;

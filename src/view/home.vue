@@ -11,10 +11,12 @@
             <span v-if="isLoggedIn"> email : {{ currentUser.email }}</span>
         </nav> -->
         <Breadcrumb :crumbs="breadcrumbs" />
-        <Banner></Banner>
-        <CategoryGrid></CategoryGrid>
-        <bestSale></bestSale>
-        <productNew></productNew>
+        <div class="mx-0 md:mx-10">
+            <Banner></Banner>
+            <CategoryGrid></CategoryGrid>
+            <bestSale></bestSale>
+            <productNew></productNew>
+        </div>
 
 
 

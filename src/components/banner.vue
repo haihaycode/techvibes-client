@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto px-4 mt-2 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+    <div class="container mx-auto px-2 mt-2 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <!-- Banner 1 -->
         <div
             class="flex flex-col md:flex-row items-center justify-between bg-red-500 text-white p-4 rounded-lg w-full md:w-1/2">

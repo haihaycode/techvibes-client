@@ -68,6 +68,46 @@ const authRoutes = [
                 }
 
             },
+            {
+                path: 'product',
+                meta: {
+                    title: "Techvibes - Sản phẩm",
+                    description: "Techvibes - Sản phẩm "
+                },
+                components: {
+                    default: useComponent('product'),
+                    header: header,
+                    footer: footer
+                },
+                props: {
+                    default: (route) => ({
+                        minPrice: route.query.minPrice,
+                        maxPrice: route.query.maxPrice,
+                        sortF: route.query.sortF,
+                        sortD: route.query.sortD,
+                        categoryId: route.query.categoryId,
+                        keyword: route.query.keyword
+                    })
+                }
+
+            },
+            {
+                path: 'product/:id',
+                meta: {
+                    title: "Techvibes - Sản phẩm",
+                    description: "Techvibes - Sản phẩm "
+                },
+                components: {
+                    default: useComponent('productDetail'),
+                    header: header,
+                    footer: footer
+                },
+                props: {
+                    default: true, // Kích hoạt để truyền `id` vào `ProductDetail` dưới dạng props
+                },
+
+
+            },
         ]
     },
 ];

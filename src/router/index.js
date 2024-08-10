@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
 import publicRoutes from '@/router/publicRoutes';
 import adminRoutes from '@/router/adminRoutes';
+import accountRoutes from '@/router/accountRoutes';
 import store from '@/store'; // Import store
 
 import { Notyf } from 'notyf';
@@ -12,6 +13,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 export const routes = [
     ...publicRoutes,
     ...adminRoutes,
+    ...accountRoutes
 ];
 
 const router = createRouter({
@@ -61,7 +63,7 @@ router.beforeEach((to, from, next) => {
     const isLoginPage = to.path === '/login';
     const isRegisterPage = to.path === '/Register';
 
-    if (requiresAuth && !isLoggedIn) {
+    if (requiresAuth && !isLoggedIn && to.path.includes('/account')) {
         notyf.error('Bạn chưa đăng nhập');
         next('/login');
     } else if (isAdminRoute && (!userRoles.includes('ROLE_ADMIN') && !userRoles.includes('ROLE_STAFF'))) {
