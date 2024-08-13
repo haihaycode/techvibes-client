@@ -691,9 +691,7 @@ import SkeletonTable from '@/components/SkeletonTable.vue';
 import DefaultSkeleton from '@/components/defaultSekeleton.vue';
 import { formatCurrency, timeAgo } from '@/utils/utils';
 import CKEditorComponent from '@/components/CKEditor.vue';
-
 import { readXMLFile } from '@/utils/xmlService';
-
 import * as Yup from 'yup';
 export default {
     name: 'productView',
@@ -966,7 +964,8 @@ export default {
                     if (error.response && error.response.status === 403) {
                         notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
                     } else {
-                        notyf.error(error);
+                        console.log(error)
+                        notyf.error(error.data);
                     }
                 } finally {
                     this.product.productEditor.loading = false;

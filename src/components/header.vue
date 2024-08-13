@@ -2,7 +2,7 @@
     <nav class="bg-red-500 border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-1">
             <a href="/" class="flex items-center">
-                <img src="/image/logo2.png" class="h-14" alt=" Logo Techvibes" />
+                <img src="/image/logos.png" class="h-14" alt=" Logo Techvibes" />
                 <span class="text-white text-2xl px-2 font-medium">
                     TechVibes <br> <span class="font-light text-xl">Thế giới công nghệ</span>
                 </span>
@@ -86,7 +86,7 @@
                         </div>
                     </li>
                     <li class="flex items-center mb-4 md:mb-0 border-2 rounded border-gray-100 text-xs px-2">
-                        <router-link to="/"
+                        <router-link to="/find-order"
                             class="flex items-center py-2 px-3 text-white rounded md:bg-transparent md:text-white-700 md:p-0 md:dark:text-blue-500 hover:underline"
                             aria-current="page">
                             <i class="fad fa-search px-2 "></i>

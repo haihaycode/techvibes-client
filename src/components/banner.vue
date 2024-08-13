@@ -4,32 +4,33 @@
         <div
             class="flex flex-col md:flex-row items-center justify-between bg-red-500 text-white p-4 rounded-lg w-full md:w-1/2">
             <div>
-                <h2 class="text-xl font-bold">Đặc Quyền S-Student</h2>
-                <p class="text-lg">TỰU TRƯỜNG LÊN DEAL CHIẾN</p>
+                <h2 class="text-2xl font-bold">Techvibes - Công nghệ trong tay bạn</h2>
+                <p class="text-lg">Khai trương GIẢM 50% </p>
                 <div class="flex space-x-2 mt-2">
-                    <span>Giảm thêm 10%</span>
-                    <span>Trả góp 0%</span>
-                    <span>Thu cũ lên đời 5 triệu</span>
+                    <span>Giảm sâu lên đến 30%</span>
+                    <span>Các mặt hàng công nghệ</span>
+
                 </div>
-                <p class="text-sm mt-2">15.8 - 31.10 | <a href="#" class="underline">XEM CHI TIẾT</a></p>
+                <p class="text-sm mt-2">Điện thoại - Máy tính bảng - Máy ảnh <RouterLink to="/product"
+                        class="underline"> Xem chi tiết
+                    </RouterLink>
+                </p>
             </div>
             <div class="flex space-x-2 mt-4 md:mt-0">
-                <img src="https://asset.msi.com/resize/image/global/product/product_16897537971a5bf13cb50e1e26b0c835af9ad4e311.png62405b38c58fe0f07fcef2367d8a9ba1/400.png"
-                    alt="iPhone 15 Pro Max" class="h-20 mt-4 md:mt-0">
+                <img src="/image/logos.png" alt="iPhone 15 Pro Max" class="h-40 mt-4 md:mt-0">
             </div>
         </div>
 
         <!-- Banner 2 -->
         <div
-            class="flex flex-col md:flex-row items-center justify-between bg-black text-white p-4 rounded-lg w-full md:w-1/2">
+            class="flex flex-col md:flex-row items-center justify-between bg-yellow-400 text-white p-4 rounded-lg w-full md:w-1/2">
             <div>
-                <h2 class="text-xl font-bold">iPhone 15 Pro Max</h2>
-                <p class="text-lg">Sạc iPhone 15 với chính sợi cáp USB-C bạn dùng để sạc các thiết bị khác.</p>
-                <p class="text-sm mt-2">Lên đời từ 27.09 Triệu</p>
-                <button class="mt-2 px-4 py-2 bg-gray-700 text-white rounded">Nâng cấp ngay</button>
+                <h2 class="text-xl font-bold">Điện thoại - Máy tính bảng - Máy ảnh </h2>
+                <p class="text-lg">Ai nói tiền không mua được hạnh phúc chắc hẳn không biết <br> chỗ nào để mua sắm</p>
+                <p class="text-xl mt-2">Đồ cũ giảm tới <Strong class="text-3xl">50%</Strong> </p>
+
             </div>
-            <img src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:0/q:90/plain/https://cellphones.com.vn/media/wysiwyg/Phone/Apple/iphone_15/Apple-iPhone-15-Pro-9.jpg"
-                alt="iPhone 15 Pro Max" class="h-20 mt-4 md:mt-0">
+            <img src="/image/saleLogo50.svg" alt="iPhone 15 Pro Max" class="h-40 mt-4 md:mt-0">
         </div>
     </div>
 </template>

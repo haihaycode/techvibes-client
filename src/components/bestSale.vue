@@ -1,10 +1,11 @@
 <template>
     <div class="container mx-auto px-1 mt-2">
+        <img src="/image/bannerSale.svg" alt="">
         <div class="flex justify-between items-center bg-red-500 text-white py-2 px-4 rounded">
             <h2 class="text-lg font-bold">TOP MẶT HÀNG GIẢM GIÁ</h2>
             <div class="countdown">
-                <span>Bắt đầu sau : </span>
-                <span>00 : 00 : 03 : 54</span>
+                <span>Mua ngay </span>
+                <span>Săn deal hời giảm đến 50%</span>
             </div>
         </div>
         <div class="flex flex-wrap mx-2 mt-4 border-red-500 border-2 rounded ">
@@ -16,12 +17,12 @@
                         <div class="flex justify-between items-center mb-2">
                             <span class="bg-red-600 text-white px-2 py-1 text-xs rounded">Giảm {{ p.discount }}%</span>
                         </div>
-                        <h3 class="text-lg font-semibold">{{ p.name }}</h3>
+                        <a :href="`/product/` + p.id" class="text-lg font-semibold hover:underline">{{ p.name }}</a>
                         <div class="flex items-baseline mb-2">
                             <span class="text-red-600 font-bold text-xl">{{ formatCurrency(p.price - (p.price *
                 (p.discount
                     /
-                    100))) }} VNĐ</span>
+                    100))) }} </span>
                             <span class="text-gray-500 line-through ml-2">{{ formatCurrency(p.price) }}</span>
                         </div>
                         <p class="text-gray-600 text-sm mb-2 truncate">{{ p.descriptionSort }}</p>

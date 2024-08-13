@@ -92,6 +92,20 @@ const adminRoutes = [
                 }
 
             },
+            {
+                path: 'order',
+                meta: {
+                    title: "Quản lý Đơn Hàng - Techvibes ",
+                    description: "Techvibes",
+                    requiresAuth: true
+                },
+                components: {
+                    default: useComponent('admin/order'),
+                    NavAndSideBarAdmin: NavAndSideBarAdmin,
+                    footerAdmin: footerAdmin
+                }
+
+            },
 
         ]
     },

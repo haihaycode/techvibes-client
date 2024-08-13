@@ -1,5 +1,5 @@
 <template>
-    <Breadcrumb :crumbs="breadcrumbs" />
+    <Breadcrumb :crumbs="breadcrumbs" class="ml-14" />
 
     <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -9,9 +9,7 @@
                 <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
 
                     <div v-if="cartItems.length === 0" class="space-y-6 text-center">
-                        <span class="text-red-400">Giỏ hàng trống </span> <a href="/product"
-                            class="underline text-blue-500">Quay lại
-                            mua hàng </a>
+                        <span class="text-gray-400">không có sản phẩm nào </span>
                     </div>
                     <div v-else class="space-y-6">
                         <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6"
@@ -144,15 +142,15 @@
                             </dl>
                             <a v-if="cartItems.length===0" href="/product"
                                 class="w-full rounded-lg bg-gray-500 px-4 py-3 text-base font-semibold text-white shadow-sm ring-blue-600 ring-offset-1 transition hover:ring-offset-2 dark:bg-blue-500 dark:ring-offset-gray-800 dark:ring-blue-400 dark:hover:ring-offset-gray-700 sm:px-8 sm:py-5 sm:text-lg"
-                                :disabled="isLoading">
+                                :disabled="!isLoading">
                                 Giỏ hàng trống
                             </a>
 
-                            <button v-else type="button"
+                            <RouterLink v-else type="button" to="/account/checkout"
                                 class="w-full rounded-lg bg-red-500 px-4 py-3 text-base font-semibold text-white shadow-sm ring-blue-600 ring-offset-1 transition hover:ring-offset-2 dark:bg-blue-500 dark:ring-offset-gray-800 dark:ring-blue-400 dark:hover:ring-offset-gray-700 sm:px-8 sm:py-5 sm:text-lg"
-                                :disabled="isLoading">
-                                Tiến hàng đặt hàng
-                            </button>
+                                :disabled="cartItems.length === 0">
+                                Tiến hàng đặt hàng <i class="fad fa-shopping-cart"></i>
+                            </RouterLink>
                         </div>
                     </div>
                 </div>

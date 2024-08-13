@@ -58,6 +58,30 @@ const accountRoutes = [
                     footer: footer
                 }
             },
+            {
+                path: 'checkout',
+                meta: {
+                    title: "Techvibes - Tiến hành thanh toán",
+                    description: "Techvibes "
+                },
+                components: {
+                    default: useComponent('checkout'),
+                    header: header,
+                    footer: footer
+                }
+            },
+            {
+                path: 'order',
+                meta: {
+                    title: "Techvibes - Đơn hàng của bạn",
+                    description: "Techvibes "
+                },
+                components: {
+                    default: useComponent('order'),
+                    header: header,
+                    footer: footer
+                }
+            },
 
         ]
     },

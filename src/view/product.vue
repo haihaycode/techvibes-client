@@ -76,12 +76,12 @@
                         <div class="flex justify-between items-center mb-2">
                             <span class="bg-red-600 text-white px-2 py-1 text-xs rounded">Giảm {{ p.discount }}%</span>
                         </div>
-                        <a :href="`/product/` + p.id" class="text-lg font-semibold">{{ p.name }}</a>
+                        <a :href="`/product/` + p.id" class="text-lg font-semibold hover:underline">{{ p.name }}</a>
                         <div class="flex items-baseline mb-2">
                             <span class="text-red-600 font-bold text-xl">{{ formatCurrency(p.price - (p.price *
         (p.discount
             /
-            100))) }} VNĐ</span>
+            100))) }} </span>
                             <span class="text-gray-500 line-through ml-2">{{ formatCurrency(p.price) }}</span>
                         </div>
                         <p class="text-gray-600 text-sm mb-2 truncate">{{ p.descriptionSort }}</p>
@@ -163,7 +163,7 @@ export default {
             loading: false,
             filters: {
                 scope: '',
-                limit: 12,
+                limit: 8,
                 page: 0,
                 sortField: 'id',
                 sortDirection: 'desc',

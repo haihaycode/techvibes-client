@@ -1,18 +1,11 @@
 <template>
 
 
-    <div class="address-container p-6">
+    <div class="address-container p-6 mt-2">
         <Breadcrumb :crumbs="breadcrumbs" />
-
-
-        <i class="fas fa-arrow-left px-5 py-2"></i>
-        <RouterLink to="/account" class="text-gray-500 hover:text-gray-700 px-4">
-
-            <span class="ml-10 text-red-500 font-bold">Quay lại</span>
-        </RouterLink>
         <!-- Header -->
         <div class="flex justify-between items-center mb-6 border-b border-gray-200 pb-4">
-            <h2 class="text-xl font-bold">Địa chỉ của tôi</h2>
+            <h2 class="text-xl font-bold">Địa chỉ giao hàng</h2>
 
             <button @click="modalUpdate"
                 class="flex items-center bg-red-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">

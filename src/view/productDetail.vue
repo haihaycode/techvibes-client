@@ -1,7 +1,9 @@
 <template>
+    <Breadcrumb :crumbs="breadcrumbs" />
+
     <div class="container mx-auto p-4">
         <!-- Kiểm tra nếu sản phẩm đã được tải -->
-        <div v-if="product" class="flex flex-col lg:flex-row">
+        <div v-if="product && product.category && product.category.id" class="flex flex-col lg:flex-row">
             <!-- Hình ảnh sản phẩm -->
             <div class="w-full lg:w-1/2">
                 <img :src="getPhoto(product.image)" alt="Product Image"
@@ -10,13 +12,19 @@
 
             <!-- Thông tin sản phẩm -->
             <div class="w-full lg:w-1/2 lg:pl-8 mt-4 lg:mt-0">
-                <h1 class="text-2xl font-bold mb-2">{{ product.name }}</h1>
+                <h1 class="text-2xl font-bold mb-2">{{ product.name }}
+                    <span class="bg-red-600 text-white px-2 py-1 text-xs rounded">Giảm {{ product.discount }}%</span>
+                </h1>
+
                 <div class="flex items-baseline mb-4">
-                    <span class="text-red-600 font-bold text-2xl">{{ formatCurrency(product.price - (product.price *
-            (product.discount / 100))) }} VNĐ</span>
+                    <span class="text-red-600 font-bold text-2xl">
+                        {{ formatCurrency(product.price - (product.price * (product.discount / 100))) }} VNĐ
+                    </span>
                     <span class="text-gray-500 line-through ml-2">{{ formatCurrency(product.price) }}</span>
                 </div>
-                <p class="text-gray-600 mb-4" v-html="product.description"> </p>
+                <p class="text-gray-600 mb-4"><span class="text-xl">Số lượng</span> : {{ product.quantity > 0 ?
+        product.quantity : 'hết hàng' }}</p>
+                <p class="text-gray-600 mb-4" v-html="product.description"></p>
 
                 <div class="flex items-center mb-4">
                     <button @click="addtocart(product.id)"
@@ -25,7 +33,7 @@
                     </button>
                     <button @click="addToFavorites(product.id)"
                         class="ml-4 p-2 border border-red-500 text-red-500 rounded hover:bg-red-100">
-                        <i class="fas fa-heart"></i>
+                        <i class="far fa-heart"></i>
                     </button>
                 </div>
             </div>
@@ -35,16 +43,27 @@
         <div v-else class="flex items-center justify-center p-4">
             <p class="text-gray-600 text-lg">Sản phẩm không tồn tại</p>
         </div>
+
+        <!-- Chỉ hiển thị khi categoryId đã được load -->
+        <RelatedProductView v-if="product.category && product.category.id" :categoryId="product.category.id" />
     </div>
 </template>
+
 <script>
 import favoriteService from '@/services/favoriteService';
 import productService from '@/services/productService';
+import Breadcrumb from '@/components/breadcrumb.vue';
 import { Notyf } from 'notyf';
 import { formatCurrency, timeAgo } from '@/utils/utils';
+import RelatedProductView from '@/components/relatedProduct.vue';
 import CartService from '@/services/cartService';
+
 export default {
     name: 'ProductDetailView',
+    components: {
+        RelatedProductView,
+        Breadcrumb
+    },
     props: {
         id: {
             type: String,
@@ -53,13 +72,24 @@ export default {
     },
     data() {
         return {
-            product: null,
+            product: {},
             loading: false,
-
+            breadcrumbs: [
+                { text: 'Trang chủ', link: '/' },
+                { text: 'Sản Phẩm', link: '/product' },
+                { text: '', link: '/' },
+            ],
         }
     },
     mounted() {
         this.fetchProductById(this.$props.id);
+    },
+    watch: {
+        product(newValue) {
+            if (newValue.name) {
+                this.breadcrumbs[2].text = newValue.name;
+            }
+        }
     },
     methods: {
         formatCurrency,
@@ -75,24 +105,20 @@ export default {
             return "http://localhost:8080/api/public/product/image/" + photo;
         },
         async fetchProductById(id) {
-            console.log(id);
             this.loading = true;
             var notyf = new Notyf();
             try {
                 var resp = await productService.fetchProductByID(id);
                 this.product = resp.data;
-                console.log(resp.data);
             } catch (error) {
                 console.log(error);
                 notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
             } finally {
                 this.loading = false;
             }
-
         },
         async addToFavorites(productId) {
             try {
-                // Gọi service và truyền vào id sản phẩm
                 await favoriteService.favorite(this.$store, productId);
             } catch (error) {
                 console.error('Error adding to favorites:', error);
@@ -100,6 +126,4 @@ export default {
         }
     }
 }
-
-
 </script>

@@ -49,6 +49,7 @@ const favoriteService = {
                     Authorization: `Bearer ${token}`,
                 },
             });
+
             return {
                 message: response.data.message,
                 data: response.data.data,
@@ -90,6 +91,28 @@ const favoriteService = {
             return response.data;
         } catch (error) {
             console.error('Error exporting users to Excel:', error);
+            throw error;
+        }
+    },
+
+    //client
+    async getFavoritesUser(store, params) {
+        try {
+            const token = store.getters.token;
+            const queryString = new URLSearchParams(params).toString();
+            const url = `${API_ENDPOINT_PUBLIC}/public/favorite?${queryString}`;
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            return {
+                message: response.data.message,
+                data: response.data.data,
+            };
+        } catch (error) {
+            console.error('Error fetching favorites:', error);
             throw error;
         }
     },

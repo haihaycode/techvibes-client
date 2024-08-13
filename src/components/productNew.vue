@@ -1,11 +1,12 @@
 <template>
     <div class="container mx-auto px-1 mt-2">
         <div class="flex justify-between items-center bg-red-500 text-white py-2 px-4 rounded">
-            <h2 class="text-lg font-bold">Các sản phẩm mới </h2>
-            <div class="countdown">
+            <h2 class="text-lg font-bold"> <i class="fad fa-sparkles block text-white  px-2 "></i> Các sản phẩm mới
+            </h2>
+            <!-- <div class="countdown">
                 <span>Bắt đầu sau : </span>
                 <span>00 : 00 : 03 : 54</span>
-            </div>
+            </div> -->
         </div>
         <div class="flex flex-wrap -mx-2 mt-4 ">
 
@@ -16,12 +17,12 @@
                         <div class="flex justify-between items-center mb-2">
                             <span class="bg-red-600 text-white px-2 py-1 text-xs rounded">Giảm {{ p.discount }}%</span>
                         </div>
-                        <h3 class="text-lg font-semibold">{{ p.name }}</h3>
+                        <a :href="`/product/` + p.id" class="text-lg font-semibold hover:underline">{{ p.name }}</a>
                         <div class="flex items-baseline mb-2">
                             <span class="text-red-600 font-bold text-xl">{{ formatCurrency(p.price - (p.price *
                 (p.discount
                     /
-                    100))) }} VNĐ</span>
+                    100))) }} </span>
                             <span class="text-gray-500 line-through ml-2">{{ formatCurrency(p.price) }}</span>
                         </div>
                         <p class="text-gray-600 text-sm mb-2 truncate">{{ p.descriptionSort }}</p>

@@ -23,6 +23,26 @@ const accountService = {
         }
     },
 
+
+    async getAccountsList(store) {
+        try {
+            const token = store.getters.token;
+            const url = `${API_ENDPOINT}/users/list/k`;
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return {
+                message: response.data.message,
+                data: response.data,
+            };
+        } catch (error) {
+            console.error('Error fetching accounts:', error);
+            throw error;
+        }
+    },
+
     async getAccountsById(store, userId) {
         try {
             const token = store.getters.token;

@@ -108,6 +108,33 @@ const authRoutes = [
 
 
             },
+
+            {
+                path: 'tks',
+                meta: {
+                    title: "Techvibes - Cảm ơn bạn đã đặt hàng",
+                    description: "Techvibes - Sản phẩm "
+                },
+                components: {
+                    default: useComponent('ThankYouPage'),
+                    header: header,
+                    footer: footer
+                },
+
+
+            },
+            {
+                path: 'find-order',
+                meta: {
+                    title: "Techvibes - Tìm kiếm đơn hàng",
+                    description: "Techvibes - Sản phẩm "
+                },
+                components: {
+                    default: useComponent('look-up-orders'),
+                    header: header,
+                    footer: footer
+                },
+            },
         ]
     },
 ];
