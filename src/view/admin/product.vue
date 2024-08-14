@@ -3,6 +3,69 @@
         <div id="main-content"
             class="relative w-full h-full overflow-y-auto overflow-x-hidden bg-gray-50 lg:ml-64 dark:bg-gray-900 mt-14">
             <main>
+
+                <nav class="flex mb-5" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                        <li class="inline-flex items-center">
+                            <a href="#"
+                                class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
+                                    </path>
+                                </svg>
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <a href="#"
+                                    class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Quản
+                                    lý</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page"> Quản lý
+                                    Sản phẩm</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+                <!-- bộ lọc -->
+                <h1 class="text-2xl font-bold mb-2">
+                    <i class="fad fa-shopping-cart"></i> Thông tin các sản phẩm
+                </h1>
+                <i class="text-gray-500 text-sm mt-1 ">Cập nhật các sản phẩm *</i>
+
+
+                <div class="grid grid-cols-2 gap-4 py-4">
+                    <!-- Tổng số đơn hàng -->
+                    <div class="bg-blue-500 p-4 text-white rounded">
+                        <h2 class="text-xl font-bold">Tổng sản phẩm</h2>
+                        <p class="text-3xl">{{ listProductFull.length }}</p>
+                    </div>
+
+                    <!-- Tổng đơn hàng chưa xử lý -->
+                    <div class="bg-yellow-500 p-4 text-white rounded">
+                        <h2 class="text-xl font-bold">Sản phẩm đang hết hàng</h2>
+                        <p class="text-3xl">{{ hetSL().length }}</p>
+                    </div>
+                </div>
+
                 <!-- bộ lọc -->
                 <div
                     class=" bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
@@ -179,78 +242,78 @@
                                             <th @click="changeSort('id')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'id'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i> Mã sản phẩm
 
                                             </th>
                                             <th @click="changeSort('name')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'name'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i>
                                                 Tiêu đề sản phẩm
                                             </th>
                                             <th @click="changeSort('price')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'price'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i>
                                                 Giá / 1
                                             </th>
                                             <th @click="changeSort('quantity')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'quantity'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i> Số lượng hiện có
 
                                             </th>
                                             <th @click="changeSort('discount')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'discount'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i> Giảm giá (%)
                                             </th>
                                             <th @click="changeSort('descriptionSort')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'descriptionSort'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i>
                                                 Mô tả ngắn / xem thông tin mô tả
                                             </th>
                                             <th @click="changeSort('createDate')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'createDate'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i> Thời gian tạo và cập nhật
                                             </th>
                                             <th @click="changeSort('category.id')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="product.filters.sortField === 'category.id'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i> Danh mục / (id)
                                             </th>
                                             <th scope="col"
@@ -264,10 +327,10 @@
                                             <th @click="changeSort('available')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 Thao tác / <i v-if="product.filters.sortField === 'available'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': product.filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': product.filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': product.filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': product.filters.sortDirection === 'desc'
+                        }">
                                                 </i> Trạng thái
                                             </th>
                                         </tr>
@@ -320,8 +383,8 @@
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
                                                 {{ timeAgo(p.createDate) ? timeAgo(p.createDate) : 'chưa cập nhật' }} -
                                                 {{
-                                    timeAgo(p.updateDate) ?
-                                        timeAgo(p.updateDate) : 'chưa cập nhật' }}
+                            timeAgo(p.updateDate) ?
+                                timeAgo(p.updateDate) : 'chưa cập nhật' }}
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
@@ -330,8 +393,8 @@
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-xl font-normal  text-red-500 text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
                                                 <p>{{ formatCurrency(p.price - (p.price * (p.discount
-                                    /
-                                    100))) }} VNĐ</p>
+                            /
+                            100))) }} VNĐ</p>
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500  truncate xl:max-w-xs dark:text-gray-400">
@@ -411,8 +474,8 @@
 
                         <span
                             class="border border-1 mx-2 rounded-lg text-gray-900 text-sm py-2 px-3 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{
-                                    product.filters.page + 1 }} / {{ product.filters.scope ? product.filters.scope.totalPages
-                                    : "" }}
+                            product.filters.page + 1 }} / {{ product.filters.scope ? product.filters.scope.totalPages
+                            : "" }}
                         </span>
                         <form class="max-w-sm mx-auto flex items-center">
 
@@ -521,8 +584,8 @@
                             class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                 {{ product.productEditor.object.id ? 'Cập nhật sản phẩm : ' +
-                                    product.productEditor.object.id :
-                                    'Tạo mới sản phẩm' }}
+                            product.productEditor.object.id :
+                            'Tạo mới sản phẩm' }}
                             </h3>
                             <button type="button"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -612,9 +675,9 @@
                                     <div
                                         class="mt-1 p-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                                         {{ formatCurrency(product.productEditor.object.price -
-                                    (product.productEditor.object.price * (product.productEditor.object.discount
-                                        /
-                                        100))) }}</div>
+                            (product.productEditor.object.price * (product.productEditor.object.discount
+                                /
+                                100))) }}</div>
                                 </div>
                                 <!-- Hình ảnh -->
                                 <div class="mb-4">
@@ -713,6 +776,7 @@ export default {
         return {
             schema,
             isModalVisible: false,
+            listProductFull: [],
             product: {
                 list: [],
                 loading: false,
@@ -763,6 +827,7 @@ export default {
     mounted() {
         this.loadProducts();
         this.loadCategory();
+        this.getListProduct();
     },
     methods: {
         timeAgo,
@@ -879,6 +944,7 @@ export default {
                 }
             } finally {
                 this.product.loading = false;
+                this.getListProduct();
             }
         },
         changeSort(field) {
@@ -1026,6 +1092,29 @@ export default {
             this.product.import.xmlContent = '';
             this.product.import.message = 'Upload canceled';
         },
+
+        async getListProduct() {
+            var notyf = new Notyf();
+            try {
+                var resp = await productService.getListProduct(this.$store);
+                this.listProductFull = resp.data.data;
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    notyf.error("có lỗi xảy ra")
+                    console.log(error)
+                } else {
+                    notyf.error("có lỗi xảy ra")
+                    console.log(error);
+                }
+            }
+        },
+        hetSL() {
+            if (this.listProductFull && this.listProductFull.length > 0) {
+                return this.listProductFull.filter(p => p.quantity === 0);
+            }
+            return [];
+        }
+
     },
 }
 

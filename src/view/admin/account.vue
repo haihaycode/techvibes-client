@@ -51,8 +51,11 @@
                                 </ol>
                             </nav>
                             <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                                Quản lý người
-                                dùng
+                                <h1 class="text-2xl font-bold mb-2">
+                                    <i class="fad fa-users"></i> Thông tin của người dùng
+                                </h1>
+                                <i class="text-gray-500 text-sm mt-1 ">Cập nhật thông tin cho người dùng và hạn chế
+                                    người dùng *</i>
                             </h1>
                         </div>
                         <div
@@ -484,7 +487,7 @@ import { Notyf } from 'notyf';
 import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 import { timeAgo } from '@/utils/utils';
-
+import { mapActions } from 'vuex';
 export default {
     name: "accountView",
     components: {
@@ -530,6 +533,11 @@ export default {
         };
     },
     methods: {
+
+        ...mapActions({
+            logoutUser: 'logout'
+        }),
+
         timeAgo,
         async loadAccounts() {
             this.user.loading = true;

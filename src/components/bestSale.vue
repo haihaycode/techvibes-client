@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto px-1 mt-2">
-        <img src="/image/bannerSale.svg" alt="">
+        <img class="border border-red-500 rounded mb-1" src="/image/bannerSale.svg" alt="">
         <div class="flex justify-between items-center bg-red-500 text-white py-2 px-4 rounded">
             <h2 class="text-lg font-bold">TOP MẶT HÀNG GIẢM GIÁ</h2>
             <div class="countdown">
@@ -10,7 +10,7 @@
         </div>
         <div class="flex flex-wrap mx-2 mt-4 border-red-500 border-2 rounded ">
 
-            <div v-for="(p, i) in products" :key="i" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4 ">
+            <div v-for="(p, i) in products" :key="i" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4 p-2 ">
                 <div class="bg-white rounded shadow-lg overflow-hidden">
                     <img :src="getPhoto(p.image)" alt="Product 1" class="w-full h-100 object-cover">
                     <div class="p-4">

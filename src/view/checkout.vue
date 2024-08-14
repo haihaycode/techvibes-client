@@ -140,7 +140,7 @@
                                     <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Tổng tiền :
                                     </dt>
                                     <dd class="text-base font-extrabold text-red-500 dark:text-white ">{{
-        formatCurrency(totalPrice) }} VNĐ</dd>
+                                        formatCurrency(totalPrice) }} VNĐ</dd>
                                 </dl>
 
                                 <!-- Phương thức thanh toán -->
@@ -285,7 +285,7 @@ export default {
             }
         },
         async checkout() {
-            this.buttonLoading = true
+
             try {
                 const response = await addressService.getAddresses(this.$store);
                 var addressList = response.data.data;
@@ -312,6 +312,7 @@ export default {
             }
 
             if (this.paymentMethod === "cod") {
+                this.buttonLoading = true
                 try {
                     // Gọi phương thức checkoutCOD từ checkoutService
                     await checkoutService.checkoutCOD(this.$store);
@@ -321,14 +322,21 @@ export default {
                 } catch (error) {
                     notyf.error(' ' + error.response.data.message);
                 }
+                finally {
+                    this.buttonLoading = false;
+                }
             } else if (this.paymentMethod === "vnpay") {
+                this.buttonLoading = true
                 try {
                     await checkoutService.checkoutVNPAY(this.$store);
                 } catch (error) {
                     notyf.error(' ' + error.response.data.message);
                 }
+                finally {
+                    this.buttonLoading = false;
+                }
             }
-            this.buttonLoading = false;
+
         }
 
 

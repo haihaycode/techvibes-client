@@ -409,6 +409,7 @@ import { Notyf } from 'notyf';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 import favoriteService from '@/services/favoriteService';
 import { timeAgo } from '@/utils/utils';
+import { mapActions } from 'vuex';
 export default {
     name: "favoriteView",
     components: {
@@ -446,6 +447,9 @@ export default {
         };
     },
     methods: {
+        ...mapActions({
+            logoutUser: 'logout'
+        }),
         timeAgo,
         async loadFavorite() {
             this.loading = true;

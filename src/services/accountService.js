@@ -27,7 +27,7 @@ const accountService = {
     async getAccountsList(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/users/list/k`;
+            const url = `${API_ENDPOINT}/list/users`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,

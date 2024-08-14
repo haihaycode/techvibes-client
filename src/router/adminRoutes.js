@@ -107,6 +107,21 @@ const adminRoutes = [
 
             },
 
+            {
+                path: 'report',
+                meta: {
+                    title: "Báo cáo thống kê - Techvibes ",
+                    description: "Techvibes",
+                    requiresAuth: true
+                },
+                components: {
+                    default: useComponent('admin/report'),
+                    NavAndSideBarAdmin: NavAndSideBarAdmin,
+                    footerAdmin: footerAdmin
+                }
+
+            },
+
         ]
     },
 ];

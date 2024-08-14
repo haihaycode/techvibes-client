@@ -36,6 +36,12 @@
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
+                            <a href="/admin"
+                                v-if="isLoggedIn & roles.includes('ROLE_ADMIN') || roles.includes('ROLE_STAFF')"
+                                class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <i class="fas fa-user-tie"></i> &nbsp; Trang Quản Lý</a>
+                        </li>
+                        <li>
                             <a href=" /account" v-if="isLoggedIn"
                                 class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <i class="fad fa-user-cog"></i> &nbsp;Thông
@@ -106,14 +112,14 @@
                     </li>
                     <li class="flex items-center mb-4 md:mb-0  border-2 rounded border-gray-100 text-xs px-2">
 
-                        <a href="#"
+                        <RouterLink to="/about-us"
                             class="flex items-center py-2 px-3 text-white rounded md:bg-transparent md:text-white-700 md:p-0 md:dark:text-blue-500 hover:underline">
                             <i class="fad fa-phone-rotary block text-white  px-2 "></i>
 
                             Liên hệ
                             <br class="md:block hidden">
                             chúng tôi
-                        </a>
+                        </RouterLink>
                     </li>
                     <li class="flex items-center mb-4 md:mb-0  border-2 rounded border-gray-100 text-xs px-2">
 

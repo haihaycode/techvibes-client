@@ -2,6 +2,26 @@ import axios from 'axios';
 const API_ENDPOINT = 'http://localhost:8080/api/admin';
 const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api';
 const productService = {
+
+    async getListProduct(store) {
+        try {
+            const token = store.getters.token;
+            const url = `${API_ENDPOINT}/list/product`;
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return {
+                message: response.data.message,
+                data: response.data,
+            };
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            throw error;
+        }
+    },
+
     async getAllProducts(store, params) {
         try {
             const token = store.getters.token;

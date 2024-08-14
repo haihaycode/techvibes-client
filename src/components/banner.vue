@@ -23,7 +23,7 @@
 
         <!-- Banner 2 -->
         <div
-            class="flex flex-col md:flex-row items-center justify-between bg-yellow-400 text-white p-4 rounded-lg w-full md:w-1/2">
+            class="flex flex-col md:flex-row items-center justify-between bg-gray-400 text-white p-4 rounded-lg w-full md:w-1/2">
             <div>
                 <h2 class="text-xl font-bold">Điện thoại - Máy tính bảng - Máy ảnh </h2>
                 <p class="text-lg">Ai nói tiền không mua được hạnh phúc chắc hẳn không biết <br> chỗ nào để mua sắm</p>

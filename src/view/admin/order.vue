@@ -3,18 +3,74 @@
         <div id="main-content"
             class="relative w-full h-full overflow-y-auto overflow-x-hidden bg-gray-50 lg:ml-64 dark:bg-gray-900 mt-14">
             <main>
+
+                <nav class="flex mb-5" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                        <li class="inline-flex items-center">
+                            <a href="#"
+                                class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
+                                    </path>
+                                </svg>
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <a href="#"
+                                    class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Quản
+                                    lý</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page"> Quản lý
+                                    đơn hàng</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
                 <!-- bộ lọc -->
                 <h1 class="text-2xl font-bold mb-2">
                     <i class="fad fa-shopping-cart"></i> Thông tin các đơn hàng đã đặt
                 </h1>
                 <i class="text-gray-500 text-sm mt-1 ">Cập nhật các đơn hàng cho người dùng *</i>
+
+
+                <div class="grid grid-cols-2 gap-4 py-4">
+                    <!-- Tổng số đơn hàng -->
+                    <div class="bg-blue-500 p-4 text-white rounded">
+                        <h2 class="text-xl font-bold">Tổng Đơn Hàng</h2>
+                        <p class="text-3xl">{{ listOrderFull.length }}</p>
+                    </div>
+
+                    <!-- Tổng đơn hàng chưa xử lý -->
+                    <div class="bg-yellow-500 p-4 text-white rounded">
+                        <h2 class="text-xl font-bold">Đơn Hàng Chưa Xử Lý</h2>
+                        <p class="text-3xl">{{ donHangchuaXuly().length }}</p>
+                    </div>
+                </div>
+
                 <div
                     class=" bg-white block sm:flex items-center justify-between border-b border-gray-200  dark:bg-gray-800 dark:border-gray-700">
-
                     <div class="w-full mb-1">
                         <div
                             class="flex flex-col sm:flex-row sm:items-center sm:justify-between md:divide-x md:divide-gray-100 dark:divide-gray-700">
-
                             <form
                                 class="flex flex-col sm:flex-row sm:items-center space-y-4 md:space-x-2 sm:space-y-0 sm:space-x-2 w-full sm:pr-3"
                                 @submit.prevent="applyFilters">
@@ -25,7 +81,7 @@
                                     </label>
                                     <input type="text" v-model="filters.keyword" id="products-search"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Tìm kiếm sản phẩm">
+                                        placeholder="Tìm kiếm hóa đơn , tên người dùng ...">
                                 </div>
 
                                 <div class="w-full sm:w-auto">
@@ -51,8 +107,10 @@
                                     <select id="availability-select" v-model="filters.accountId"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="" selected>-- không xét</option>
-                                        <option v-for="account in accounts" :key="account.id" :value="account.id">
-                                            {{ account.name }}
+                                        <option v-for="account in accounts" :key="account.userId"
+                                            :value="account.userId">
+                                            {{ account.userId }} / {{ account.fullName
+                            ? account.fullName : 'Người dùng TechVibes' }}
                                         </option>
 
                                     </select>
@@ -128,48 +186,48 @@
                                             <th @click="changeSort('fullName')" scope="col" colspan="2"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'fullName'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i> Họ và tên
 
                                             </th>
                                             <th @click="changeSort('email')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'email'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i>
                                                 Thư điện tử
                                             </th>
                                             <th @click="changeSort('address')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'address'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i> Địa chỉ giao hàng
                                             </th>
                                             <th @click="changeSort('phone')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'phone'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i>Số điện thoại
                                             </th>
                                             <th @click="changeSort('totalPrice')" scope="col"
                                                 class="text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'totalPrice'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i> Tổng tiền đơn hàng
                                             </th>
                                             <th scope="col"
@@ -179,28 +237,28 @@
                                             <th @click="changeSort('createDate')" scope="col"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'createDate'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i> Thời gian tạo đơn hàng
                                             </th>
                                             <th scope="col" @click="changeSort('orderCode')"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'orderCode'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i> Mã đơn hàng (để xem thông tin đơn hàng)
                                             </th>
                                             <th scope="col" @click="changeSort('orderStatus.id')"
                                                 class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                                 <i v-if="filters.sortField === 'orderStatus.id'" :class="{
-                                    'fas': true,
-                                    'fa-sort-amount-up': filters.sortDirection === 'asc',
-                                    'fa-sort-amount-down': filters.sortDirection === 'desc'
-                                }">
+                            'fas': true,
+                            'fa-sort-amount-up': filters.sortDirection === 'asc',
+                            'fa-sort-amount-down': filters.sortDirection === 'desc'
+                        }">
                                                 </i> Trạng thái đơn hàng
                                             </th>
                                             <th scope="col"
@@ -243,8 +301,27 @@
                                             </td>
 
                                             <td
-                                                class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                                {{ o.notes ? o.notes : 'không có thông báo ' }} </td>
+                                                class="max-w-sm p-4  text-base font-normal text-gray-500  xl:max-w-xs dark:text-gray-400">
+                                                {{ o.notes ? o.notes : 'không có thông báo' }}
+                                                <button @click="openModal(o.id)"
+                                                    class="bg-blue-500 px-2 text-white rounded ml-2">
+                                                    Cập nhật
+                                                </button>
+
+                                                <div v-if="isModalOpen(o.id)"
+                                                    class="mt-2 p-4 bg-white shadow-lg rounded-md border border-gray-300">
+                                                    <textarea v-model="o.updatedNotes"
+                                                        class="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                                                    <div class="flex justify-end mt-2">
+                                                        <button
+                                                            @click="updateOrderStatus(o.id, o.orderStatus.id, o.updatedNotes ? o.updatedNotes : o.notes)"
+                                                            class="bg-green-500 px-4 py-1 text-white rounded mr-2">Lưu</button>
+                                                        <button @click="closeModal(o.id)"
+                                                            class="bg-red-500 px-4 py-1 text-white rounded">Đóng</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+
 
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
@@ -258,10 +335,17 @@
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-
-                                                <span
+                                                <div v-if="loadingUpdateStatus"
+                                                    class="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
+                                                    Đang tải ... </div>
+                                                <select v-else v-model="o.orderStatus.id"
+                                                    @change="updateOrderStatus(o.id, o.orderStatus.id, getNameStatus(o.orderStatus.id).status)"
                                                     class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
-                                                    {{ o.orderStatus.status }}</span>
+                                                    <option v-for="(orderStatus, key) in listOrderStatus" :key="key"
+                                                        :value="orderStatus.id">
+                                                        {{ orderStatus.status }}
+                                                    </option>
+                                                </select>
                                             </td>
                                             <td
                                                 class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
@@ -363,8 +447,8 @@
                                             <td class="px-6 py-4">
                                                 {{ formatCurrency(od.price) }} <span
                                                     class="text-gray-500 line-through ml-2">{{
-                                    formatCurrency(od.product.price)
-                                }}</span>
+                            formatCurrency(od.product.price)
+                        }}</span>
                                             </td>
                                             <td class="px-6 py-4">
                                                 {{ od.product.category.name }}
@@ -397,23 +481,27 @@
 import orderService from "@/services/orderService";
 import accountService from "@/services/accountService";
 // import DefaultSkeleton from '@/components/defaultSekeleton.vue'
-// import Button from '@/components/button.vue';
+import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
-// import { Notyf } from 'notyf';
+import { Notyf } from 'notyf';
 import { formatCurrency, timeAgo } from '@/utils/utils';
 export default {
     name: "orderViewAdmin",
     components: {
         // DefaultSkeleton,
-        // Button,
+        Button,
         SkeletonTable,
 
     },
     data() {
         return {
+            listOrderFull: {},
             isModalVisible: false,
+            activeModal: null,
             listOrder: {},
             listOrderDetail: {},
+            listOrderStatus: {},
+            loadingUpdateStatus: false,
             accounts: {},
             loading: false,
             filters: {
@@ -427,35 +515,72 @@ export default {
     mounted() {
         this.getOrders();
         this.loadAccounts();
+        this.getListOrderStatus();
+        this.getListOrder();
     },
     methods: {
         formatCurrency,
         timeAgo,
+
         getPhoto(photo) {
             return "http://localhost:8080/api/public/product/image/" + photo;
         },
         async loadAccounts() {
             try {
+                var notyf = new Notyf();
                 var resp = await accountService.getAccountsList(this.$store);
-                this.accounts = resp.data;
+                this.accounts = resp.data.data;
             } catch (error) {
                 if (error.response && error.response.status === 403) {
+                    notyf.error("có lỗi xảy ra")
+                } else {
+                    notyf.error("có lỗi xảy ra")
+                }
+            }
+        },
+        async getListOrderStatus() {
+            var notyf = new Notyf();
+            try {
+                var resp = await orderService.getListOrderStatus(this.$store);
+                this.listOrderStatus = resp.data.data;
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    notyf.error("có lỗi xảy ra")
                     console.log(error)
                 } else {
+                    notyf.error("có lỗi xảy ra")
+                    console.log(error);
+                }
+            }
+        },
+        async getListOrder() {
+            var notyf = new Notyf();
+            try {
+                var resp = await orderService.getListOrder(this.$store);
+                this.listOrderFull = resp.data.data;
+            } catch (error) {
+                if (error.response && error.response.status === 403) {
+                    notyf.error("có lỗi xảy ra")
+                    console.log(error)
+                } else {
+                    notyf.error("có lỗi xảy ra")
                     console.log(error);
                 }
             }
         },
         async getOrders() {
+            var notyf = new Notyf();
             this.loading = true
             try {
                 const response = await orderService.getOrdersAdmin(this.$store, this.filters);
                 this.listOrder = response.data.content;
                 console.log(this.filters);
             } catch (error) {
+                notyf.error("có lỗi xảy ra")
                 console.log(error);
             } finally {
                 this.loading = false
+                this.getListOrder();
             }
         },
         changeSort(field) {
@@ -495,6 +620,9 @@ export default {
             if (!appliedFilters.maxPrice) {
                 delete appliedFilters.maxPrice;
             }
+            if (!appliedFilters.statusId) {
+                delete appliedFilters.statusId;
+            }
             this.filters = appliedFilters;
             this.getOrders();
         },
@@ -508,6 +636,41 @@ export default {
             }
             this.isModalVisible = !this.isModalVisible;
         },
+        getNameStatus(orderStatusId) {
+            return this.listOrderStatus.find(status => status.id === orderStatusId);
+        },
+        async updateOrderStatus(orderId, statusId, notes) {
+            this.loadingUpdateStatus = true
+            var notyf = new Notyf();
+            try {
+                const response = await orderService.updateOrderStatus(this.$store, orderId, statusId, notes);
+                notyf.success(response.message);
+            } catch (error) {
+                notyf.success(error.data.messages);
+            } finally {
+                this.closeModal();
+                this.getOrders();
+                this.loadingUpdateStatus = false
+            }
+        },
+        openModal(orderId) {
+            this.activeModal = orderId;
+        },
+        closeModal(orderId) {
+            if (this.activeModal === orderId) {
+                this.activeModal = null;
+            }
+        },
+        isModalOpen(orderId) {
+            return this.activeModal === orderId;
+        },
+        donHangchuaXuly() {
+            if (this.listOrderFull && this.listOrderFull.length > 0) {
+                return this.listOrderFull.filter(order => order.orderStatus.id === 5);
+
+            }
+            return [];
+        }
     }
 }
 </script>

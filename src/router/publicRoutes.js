@@ -135,6 +135,31 @@ const authRoutes = [
                     footer: footer
                 },
             },
+            {
+                path: 'about-us',
+                meta: {
+                    title: "Techvibes - Về chúng tôi",
+                    description: "Techvibes - Sản phẩm "
+                },
+                components: {
+                    default: useComponent('aboutus'),
+                    header: header,
+                    footer: footer
+                },
+            },
+            {
+                path: '/:pathMatch(.*)*', // Phần này bắt mọi tuyến đường không khớp
+                name: 'NotFound',
+                meta: {
+                    title: "Trang không tồn tại",
+                    description: "Techvibes - Sản phẩm "
+                },
+                components: {
+                    default: useComponent('notfound'),
+                    header: header,
+                    footer: footer
+                }
+            }
         ]
     },
 ];

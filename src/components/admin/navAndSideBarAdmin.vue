@@ -37,24 +37,27 @@
                                 aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="w-8 h-8 rounded-full"
-                                    src="https://avatars.githubusercontent.com/u/126437144?s=96&v=4" alt="user photo">
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRH6IyVRdutFkC5lE9d8V1NOR8aUSfYL3LxA&s" alt="user photo">
                             </button>
                         </div>
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
                             id="dropdown-user">
                             <div class="px-4 py-3" role="none">
                                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                    Haihaycode
+                                    {{ user ? user.email : "" }}
                                 </p>
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                    haihaycode@gmail.com
+                                    <span v-for="r in roles" :key="r"
+                                        class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
+                                        {{ r }} &nbsp;
+                                    </span>
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a href="#"
+                                    <router-link to="/account"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        role="menuitem">Quản lí tài khoản</a>
+                                        role="menuitem">Quản lí tài khoản</router-link>
                                 </li>
                                 <li>
                                     <a href="#"
@@ -67,7 +70,7 @@
                                         role="menuitem">Thông báo</a>
                                 </li>
                                 <li>
-                                    <a href="#"
+                                    <a @click="logout" v-if="isLoggedIn"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Đăng xuất</a>
                                 </li>
@@ -99,7 +102,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/admin/account"
+                    <router-link to="/admin/account" v-if="isLoggedIn & roles.includes('ROLE_ADMIN')"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -115,7 +118,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/admin/roles"
+                    <router-link to="/admin/roles" v-if="isLoggedIn & roles.includes('ROLE_ADMIN')"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -184,9 +187,8 @@
                 </li>
 
                 <li>
-                    <button type="button"
-                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                        aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
+                    <router-link to="/admin/report" v-if="isLoggedIn & roles.includes('ROLE_ADMIN')"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 24 24">
@@ -195,25 +197,12 @@
                             <path
                                 d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                         </svg>
-                        <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Thống kê & Báo
-                            Cáo</span>
-                        <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                    <ul id="dropdown-layouts" class="hidden py-2 space-y-2">
-                        <li>
-                            <a href=""
-                                class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">...</a>
-                        </li>
 
-                    </ul>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Thống kê & Báo cáo</span>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="#"
+                    <a @click="logout" v-if="isLoggedIn"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="mx-auto mb-1 text-gray-500 w-5 h-5 dark:text-gray-400" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -226,7 +215,7 @@
                 </li>
 
                 <li>
-                    <a href="#"
+                    <router-link to="/"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="mx-auto mb-1 text-gray-500 w-5 h-5 dark:text-gray-400" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -235,7 +224,7 @@
                         </svg>
 
                         <span class="flex-1 ms-3 whitespace-nowrap">Quay về trang chủ</span>
-                    </a>
+                    </router-link>
                 </li>
 
             </ul>
@@ -399,7 +388,27 @@
 
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
-    name: "navAndSideBarComponent"
+    name: "navAndSideBarComponent",
+    methods: {
+        ...mapActions(['logout']),
+        toggleDropdown() {
+            this.isDropdownOpen = !this.isDropdownOpen;
+        },
+        toggleMenu() {
+            this.isMenuOpen = !this.isMenuOpen;
+        },
+
+    },
+    computed: {
+        ...mapGetters(['isLoggedIn', 'userRoles', 'hasRole', 'currentUser']),
+        roles() {
+            return this.userRoles || [];
+        },
+        user() {
+            return this.currentUser || null;
+        }
+    },
 }
 </script>

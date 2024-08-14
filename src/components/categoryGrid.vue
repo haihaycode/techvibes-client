@@ -4,10 +4,16 @@
     <div class="p-2 container mx-auto px-2 mt-2">
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
             <div v-for="(category, index) in categories" :key="index"
-                class="flex items-center justify-center border  border-red-500 rounded p-2 hover:bg-gray-100">
+                class="flex items-center justify-center border  border-blue-500 rounded p-2 hover:bg-gray-100">
                 <img :src="getPhoto(category.image)" :alt="category.name" class="h-8 mr-1" />
                 <a :href="`/product?categoryId=${category.id}`" class="text-sm font-normal text-black">
                     {{ category.name }}
+                </a>
+
+            </div>
+            <div class="flex items-center justify-center border  border-red-500 rounded p-2 hover:bg-gray-100">
+                <a :href="`/product`" class="text-sm font-normal text-black">
+                    Tất cả
                 </a>
 
             </div>

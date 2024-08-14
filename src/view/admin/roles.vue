@@ -492,6 +492,7 @@ import { Notyf } from 'notyf';
 import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 import { VTooltip } from 'v-tooltip';
+import { mapActions } from 'vuex';
 export default {
     name: "rolesView",
     directives: {
@@ -542,6 +543,9 @@ export default {
         };
     },
     methods: {
+        ...mapActions({
+            logoutUser: 'logout'
+        }),
         async loadAccounts() {
             this.user.loading = true;
             var notyf = new Notyf();

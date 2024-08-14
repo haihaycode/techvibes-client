@@ -472,7 +472,7 @@ import SkeletonTable from '@/components/SkeletonTable.vue';
 import DefaultSkeleton from '@/components/defaultSekeleton.vue';
 import CKEditorComponent from '@/components/CKEditor.vue';
 import { timeAgo } from '@/utils/utils';
-
+import { mapActions } from 'vuex';
 export default {
     name: "categoryComponent",
     components: {
@@ -517,6 +517,9 @@ export default {
         this.loadCategory();
     },
     methods: {
+        ...mapActions({
+            logoutUser: 'logout'
+        }),
         timeAgo,
         getPhoto(photo) {
             return "http://localhost:8080/api/public/category/image/" + photo;
