@@ -1,13 +1,14 @@
 import axios from 'axios';
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
 
-const API_ENDPOINT = 'http://localhost:8080/api/admin';
-const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api/public';
+
 const accountService = {
     async getAccounts(store, params) {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT}/users?${queryString}`;
+            const url = `${API_ENDPOINT}/api/admin/users?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -27,7 +28,7 @@ const accountService = {
     async getAccountsList(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/list/users`;
+            const url = `${API_ENDPOINT}/api/admin/list/users`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ const accountService = {
     async getAccountsById(store, userId) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/users/get/${userId}`;
+            const url = `${API_ENDPOINT}/api/admin/users/get/${userId}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -64,7 +65,7 @@ const accountService = {
     async updateUser(store, userId, updateRequest) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/users/${userId}`;
+            const url = `${API_ENDPOINT}/api/admin/users/${userId}`;
             const response = await axios.put(
                 url,
                 updateRequest,
@@ -88,7 +89,7 @@ const accountService = {
     async toggleAvailability(store, userId) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/users/${userId}/availability`;
+            const url = `${API_ENDPOINT}/api/admin/users/${userId}/availability`;
             const response = await axios.patch(url, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -104,7 +105,7 @@ const accountService = {
     }, async exportUsersToExcel(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/users/export`;
+            const url = `${API_ENDPOINT}/api/admin/users/export`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -120,7 +121,7 @@ const accountService = {
     async exportUsersToExcelById(store, userId) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/users/export/${userId}`;
+            const url = `${API_ENDPOINT}/api/admin/users/export/${userId}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -137,7 +138,7 @@ const accountService = {
     async info(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT_PUBLIC}/auth/account`;
+            const url = `${API_ENDPOINT}/api/public/auth/account`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -155,7 +156,7 @@ const accountService = {
     async updateUserClient(store, account) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT_PUBLIC}/auth/account`;
+            const url = `${API_ENDPOINT}/api/public/auth/account`;
             let formData = new FormData();
             let userUpdate = {
                 fullName: account.fullName,

@@ -1,12 +1,16 @@
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8080/api/admin';
-const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api';
+
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
+
+const API_ENDPOINTv = `${API_ENDPOINT}/api/admin`;
+const API_ENDPOINT_PUBLICv = `${API_ENDPOINT}/api`;
 const categoryService = {
     async getCategory(store, params) {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT}/category?${queryString}`;
+            const url = `${API_ENDPOINTv}/category?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -24,7 +28,7 @@ const categoryService = {
     async getCategoryById(store, id) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/category/${id}`;
+            const url = `${API_ENDPOINTv}/category/${id}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -42,7 +46,7 @@ const categoryService = {
     async toggleAvailability(store, id) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/category/${id}/availability`;
+            const url = `${API_ENDPOINTv}/category/${id}/availability`;
             const response = await axios.patch(url, null, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -59,7 +63,7 @@ const categoryService = {
     async exportCategoryToExcel(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/category/export/excel`;
+            const url = `${API_ENDPOINTv}/category/export/excel`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -75,7 +79,7 @@ const categoryService = {
     async exportCategoryToExcelById(store, idCategory) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/category/export/excel/${idCategory}`;
+            const url = `${API_ENDPOINTv}/category/export/excel/${idCategory}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -92,7 +96,7 @@ const categoryService = {
     async updateCategory(store, category) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/category/${category.id}`;
+            const url = `${API_ENDPOINTv}/category/${category.id}`;
             let formData = new FormData();
             let categoryUpdate = {
                 name: category.name,
@@ -121,7 +125,7 @@ const categoryService = {
     async newCategory(store, category) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/category`;
+            const url = `${API_ENDPOINTv}/category`;
             let formData = new FormData();
             let categoryNew = {
                 name: category.name,
@@ -151,7 +155,7 @@ const categoryService = {
     async fetchCategory(params) {
         try {
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT_PUBLIC}/public/category?${queryString}`;
+            const url = `${API_ENDPOINT_PUBLICv}/public/category?${queryString}`;
             const response = await axios.get(url);
             return {
                 message: response.data.message,

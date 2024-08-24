@@ -1,6 +1,10 @@
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8080/api';
 
+
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
+
+const API_ENDPOINTv = `${API_ENDPOINT}/api`;
 
 const orderService = {
 
@@ -9,7 +13,7 @@ const orderService = {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT}/admin/orders?${queryString}`;
+            const url = `${API_ENDPOINTv}/admin/orders?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -27,7 +31,7 @@ const orderService = {
     async getListOrderStatus(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/admin/order-status`;
+            const url = `${API_ENDPOINTv}/admin/order-status`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -45,7 +49,7 @@ const orderService = {
     async getListOrder(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/admin/list/orders`;
+            const url = `${API_ENDPOINTv}/admin/list/orders`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -65,7 +69,7 @@ const orderService = {
     async updateOrderStatus(store, orderId, statusId, notes) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/admin/orders/${orderId}/status/${statusId}`;
+            const url = `${API_ENDPOINTv}/admin/orders/${orderId}/status/${statusId}`;
             const response = await axios.put(
                 url,
                 notes, // Truyền trực tiếp notes dưới dạng một chuỗi

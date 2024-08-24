@@ -1,7 +1,10 @@
 
 
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8080/api';
+
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
+const API_ENDPOINTv = `${API_ENDPOINT}/api`;
 
 
 const reportService = {
@@ -9,7 +12,7 @@ const reportService = {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT}/admin/reports/total-revenue?${queryString}`;
+            const url = `${API_ENDPOINTv}/admin/reports/total-revenue?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -25,7 +28,7 @@ const reportService = {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT}/admin/reports/product-sales?${queryString}`;
+            const url = `${API_ENDPOINTv}/admin/reports/product-sales?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,

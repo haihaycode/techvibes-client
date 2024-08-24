@@ -1,5 +1,9 @@
 import axios from 'axios';
-const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api/public';
+
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
+const API_ENDPOINT_PUBLIC = `${API_ENDPOINT}/api/public`;
+
 import { Notyf } from 'notyf';
 
 const cartService = {

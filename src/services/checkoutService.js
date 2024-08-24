@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_ENDPOINT_CHECKOUT = 'http://localhost:8080/api/public';
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
+
+const API_ENDPOINT_CHECKOUT = `${API_ENDPOINT}/api/public`;
 
 const checkoutService = {
     // Tạo header với Authorization chứa token

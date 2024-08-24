@@ -1,6 +1,8 @@
 import axios from 'axios';
+import CONFIG from './config';
 
-const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api/public/address';
+const { API_ENDPOINT } = CONFIG;
+const API_ENDPOINT_PUBLIC = `${API_ENDPOINT}/api/public/address`;
 
 const addressService = {
     // Tạo header với Authorization chứa token

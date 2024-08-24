@@ -1,6 +1,11 @@
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8080/api/admin';
-const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api';
+
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
+
+const API_ENDPOINTv = `${API_ENDPOINT}/api/admin`;
+const API_ENDPOINT_PUBLICv = `${API_ENDPOINT}/api`;
+
 import { Notyf } from 'notyf';
 const favoriteService = {
 
@@ -8,7 +13,7 @@ const favoriteService = {
         var notyf = new Notyf();
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT_PUBLIC}/public/favorite`;
+            const url = `${API_ENDPOINT_PUBLICv}/public/favorite`;
 
             const response = await axios.post(
                 url,
@@ -43,7 +48,7 @@ const favoriteService = {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT}/favorite/v1?${queryString}`;
+            const url = `${API_ENDPOINTv}/favorite/v1?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -63,7 +68,7 @@ const favoriteService = {
         try {
             const queryString = new URLSearchParams(params).toString();
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/favorite/v1/${productId}?${queryString}`;
+            const url = `${API_ENDPOINTv}/favorite/v1/${productId}?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -81,7 +86,7 @@ const favoriteService = {
     async exportFavorteToExcel(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/favorite/export/excel`;
+            const url = `${API_ENDPOINTv}/favorite/export/excel`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -100,7 +105,7 @@ const favoriteService = {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT_PUBLIC}/public/favorite?${queryString}`;
+            const url = `${API_ENDPOINT_PUBLICv}/public/favorite?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,

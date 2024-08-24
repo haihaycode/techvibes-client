@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
+import CONFIG from './config';
 
-const API_ENDPOINT = 'http://localhost:8080/api/public/auth';
+const { API_ENDPOINT } = CONFIG;
+
+const API_ENDPOINTv = `${API_ENDPOINT}/api/public/auth`;
 
 const authService = {
     async login(user) {
-        const response = await axios.post(`${API_ENDPOINT}/login`, user);
+        const response = await axios.post(`${API_ENDPOINTv}/login`, user);
         const token = response.data.data.accessToken;
         const decoded = jwtDecode(token);
         const roles = decoded.a || [];
@@ -19,26 +22,26 @@ const authService = {
         };
     },
     async register(newUser) {
-        const response = await axios.post(`${API_ENDPOINT}/register`, newUser);
+        const response = await axios.post(`${API_ENDPOINTv}/register`, newUser);
         return {
             message: response.data.message,
         };
     },
     async resetPassword(resetPassword) {
-        const response = await axios.post(`${API_ENDPOINT}/reset-password`, resetPassword);
+        const response = await axios.post(`${API_ENDPOINTv}/reset-password`, resetPassword);
         return {
             message: response.data.message,
         };
     },
     async sendMailForgotPassword(getOtp) {
-        const response = await axios.post(`${API_ENDPOINT}/forgot-password`, getOtp);
+        const response = await axios.post(`${API_ENDPOINTv}/forgot-password`, getOtp);
         return {
             message: response.data.message,
         };
     },
     async sentMailVerifyAccount(store) {
         const token = store.getters.token;
-        const response = await axios.post(`${API_ENDPOINT}/verifyEmail`, null, {
+        const response = await axios.post(`${API_ENDPOINTv}/verifyEmail`, null, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -53,7 +56,7 @@ const authService = {
             otp: otp,
             email: store.getters.currentUser.email
         }
-        const response = await axios.put(`${API_ENDPOINT}/verifyEmail`, verifyAccount, {
+        const response = await axios.put(`${API_ENDPOINTv}/verifyEmail`, verifyAccount, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -1,12 +1,15 @@
 import axios from 'axios';
-const API_ENDPOINT = 'http://localhost:8080/api/admin';
-const API_ENDPOINT_PUBLIC = 'http://localhost:8080/api';
+import CONFIG from './config';
+const { API_ENDPOINT } = CONFIG;
+
+const API_ENDPOINTv = `${API_ENDPOINT}/api/admin`;
+const API_ENDPOINT_PUBLICv = `${API_ENDPOINT}/api`;
 const productService = {
 
     async getListProduct(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/list/product`;
+            const url = `${API_ENDPOINTv}/list/product`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -26,7 +29,7 @@ const productService = {
         try {
             const token = store.getters.token;
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT}/product?${queryString}`;
+            const url = `${API_ENDPOINTv}/product?${queryString}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -44,7 +47,7 @@ const productService = {
     async getProductById(store, id) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/product/${id}`;
+            const url = `${API_ENDPOINTv}/product/${id}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -62,7 +65,7 @@ const productService = {
     async exportProductsToExcel(store) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/product/export/excel`;
+            const url = `${API_ENDPOINTv}/product/export/excel`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -78,7 +81,7 @@ const productService = {
     async exportProductToExcelById(store, id) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/product/export/excel/${id}`;
+            const url = `${API_ENDPOINTv}/product/export/excel/${id}`;
             const response = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -94,7 +97,7 @@ const productService = {
     async toggleAvailability(store, id) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/product/${id}/availability`;
+            const url = `${API_ENDPOINTv}/product/${id}/availability`;
             const response = await axios.patch(url, null, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -111,7 +114,7 @@ const productService = {
     async updateProduct(store, product) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/product/${product.id}`;
+            const url = `${API_ENDPOINTv}/product/${product.id}`;
             let formData = new FormData();
             let productUpdate = {
                 name: product.name,
@@ -146,7 +149,7 @@ const productService = {
     async createProduct(store, product) {
         try {
             const token = store.getters.token;
-            const url = `${API_ENDPOINT}/product`;
+            const url = `${API_ENDPOINTv}/product`;
             let formData = new FormData();
             let productUpdate = {
                 name: product.name,
@@ -183,7 +186,7 @@ const productService = {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await axios.post(`${API_ENDPOINT}/product/import/excel`, formData, {
+        const response = await axios.post(`${API_ENDPOINTv}/product/import/excel`, formData, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data',
@@ -197,7 +200,7 @@ const productService = {
     async fetchProduct(params) {
         try {
             const queryString = new URLSearchParams(params).toString();
-            const url = `${API_ENDPOINT_PUBLIC}/public/product?${queryString}`;
+            const url = `${API_ENDPOINT_PUBLICv}/public/product?${queryString}`;
             const response = await axios.get(url);
             return {
                 message: response.data.message,
@@ -211,7 +214,7 @@ const productService = {
     async fetchProductByID(id) {
         try {
 
-            const url = `${API_ENDPOINT_PUBLIC}/public/product/${id}`;
+            const url = `${API_ENDPOINT_PUBLICv}/public/product/${id}`;
             const response = await axios.get(url);
             return {
                 message: response.data.message,
