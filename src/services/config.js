@@ -1,6 +1,6 @@
 // config.js
 const CONFIG = {
-    API_ENDPOINT: 'http://localhost:8080',
+    API_ENDPOINT: 'https://techvibes-latest.onrender.com',
 };
 
 export default CONFIG;
