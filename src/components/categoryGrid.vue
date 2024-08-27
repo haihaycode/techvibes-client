@@ -46,10 +46,12 @@
 <script>
 import categoryService from '@/services/categoryService';
 import { Notyf } from 'notyf';
+import CONFIG from '@/services/config';
 export default {
     name: 'CategoryGrid',
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             categories: [],
             loading: false,
             filters: {
@@ -64,7 +66,7 @@ export default {
     },
     methods: {
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/category/image/" + photo;
+            return `${this.apiEndpoint}/api/public/category/image/` + photo;
         },
         async loadCategory() {
             this.loading = true;

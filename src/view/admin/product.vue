@@ -756,6 +756,7 @@ import { formatCurrency, timeAgo } from '@/utils/utils';
 import CKEditorComponent from '@/components/CKEditor.vue';
 import { readXMLFile } from '@/utils/xmlService';
 import * as Yup from 'yup';
+import CONFIG from '@/services/config';
 export default {
     name: 'productView',
     components: {
@@ -774,6 +775,7 @@ export default {
             discount: Yup.number().required('Giảm giá là bắt buộc').min(0, 'Giảm giá không được nhỏ hơn 0').max(100, 'Giảm giá không được lớn hơn 100')
         });
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             schema,
             isModalVisible: false,
             listProductFull: [],
@@ -833,7 +835,7 @@ export default {
         timeAgo,
         formatCurrency,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         resetForm() {
             this.product.productEditor.object = {

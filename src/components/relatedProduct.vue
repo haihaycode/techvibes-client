@@ -58,6 +58,7 @@ import { Notyf } from 'notyf';
 import favoriteService from '@/services/favoriteService';
 import { formatCurrency, timeAgo } from '@/utils/utils';
 import CartService from '@/services/cartService';
+import CONFIG from '@/services/config';
 export default {
     name: "relatedProductView",
     props: {
@@ -68,6 +69,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             products: [],
             loading: false,
             filters: {
@@ -87,7 +89,7 @@ export default {
         formatCurrency,
         timeAgo,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         async addtocart(itemId) {
             try {

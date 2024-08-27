@@ -485,6 +485,9 @@ import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 import { Notyf } from 'notyf';
 import { formatCurrency, timeAgo } from '@/utils/utils';
+import CONFIG from '@/services/config';
+
+
 export default {
     name: "orderViewAdmin",
     components: {
@@ -495,6 +498,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             listOrderFull: {},
             isModalVisible: false,
             activeModal: null,
@@ -523,7 +527,7 @@ export default {
         timeAgo,
 
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         async loadAccounts() {
             try {

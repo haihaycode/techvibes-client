@@ -65,6 +65,7 @@ import favoriteService from '@/services/favoriteService';
 import { formatCurrency, timeAgo } from '@/utils/utils';
 import CartService from '@/services/cartService';
 import { Notyf } from 'notyf';
+import CONFIG from '@/services/config';
 export default {
     name: 'favoriteView',
     components: {
@@ -72,6 +73,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             breadcrumbs: [
                 { text: 'Trang chủ', link: '/' },
                 { text: 'Quản lý tài khoản', link: '/account' },
@@ -95,7 +97,7 @@ export default {
         formatCurrency,
         timeAgo,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         async loadFavorites() {
             this.loading = true;

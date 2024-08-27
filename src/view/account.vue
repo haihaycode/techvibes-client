@@ -103,6 +103,8 @@ import Breadcrumb from '@/components/breadcrumb.vue';
 import accountService from '@/services/accountService';
 import DefaultSkeleton from '@/components/defaultSekeleton.vue'
 import { Notyf } from 'notyf';
+import CONFIG from '@/services/config';
+
 export default {
     name: 'AccountView',
     components: {
@@ -111,6 +113,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             breadcrumbs: [
                 { text: 'Trang chủ', link: '/' },
                 { text: 'Quản lý tài khoản', link: '/account' },
@@ -127,7 +130,7 @@ export default {
 
     methods: {
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/account/image/" + photo;
+            return `${this.apiEndpoint}/api/public/account/image/` + photo;
         },
         handleFileChange(event) {
             this.user.file = event.target.files[0];

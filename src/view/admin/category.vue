@@ -473,6 +473,9 @@ import DefaultSkeleton from '@/components/defaultSekeleton.vue';
 import CKEditorComponent from '@/components/CKEditor.vue';
 import { timeAgo } from '@/utils/utils';
 import { mapActions } from 'vuex';
+import CONFIG from '@/services/config';
+
+
 export default {
     name: "categoryComponent",
     components: {
@@ -484,6 +487,8 @@ export default {
     data() {
         return {
             isModalVisible: false,
+            apiEndpoint: CONFIG.API_ENDPOINT,
+
             category: {
                 list: [],
                 loading: false,
@@ -522,7 +527,7 @@ export default {
         }),
         timeAgo,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/category/image/" + photo;
+            return `${this.apiEndpoint}/api/public/category/image/` + photo;
         },
         async loadCategory() {
             this.category.loading = true;
@@ -533,12 +538,12 @@ export default {
                 this.category.filters.scope = resp.data;
             } catch (error) {
                 if (error.response && error.response.status === 403) {
-                    notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
-                    await this.logoutUser();
-                    this.$router.push('/login?session_expired=true');
+                    notyf.error('Đã có lỗi xảy ra');
+
                 } else {
                     notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
                 }
+                console.log(error);
             } finally {
                 this.category.loading = false;
             }
@@ -593,10 +598,11 @@ export default {
                 notyf.success(resp.message);
             } catch (error) {
                 if (error.response && error.response.status === 403) {
-                    notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.' + resp);
+                    notyf.error('Đã có lỗi xảy ra' + resp);
                 } else {
                     notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
                 }
+                console.log(error);
             }
         },
         async exportCategoryToExcel() {
@@ -648,10 +654,11 @@ export default {
                 this.category.newCategory.object = resp.data;
             } catch (error) {
                 if (error.response && error.response.status === 403) {
-                    notyf.error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+                    notyf.error('Đã có lỗi xảy ra');
                 } else {
                     notyf.error(error.response?.data?.message || 'Đã xảy ra lỗi');
                 }
+                console.log(error);
             } finally {
                 this.category.newCategory.loading = false;
             }

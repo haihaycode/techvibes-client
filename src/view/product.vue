@@ -147,6 +147,7 @@ import categoryService from '@/services/categoryService';
 import CartService from '@/services/cartService';
 import { Notyf } from 'notyf';
 import { formatCurrency, timeAgo } from '@/utils/utils';
+import CONFIG from '@/services/config';
 export default {
     name: 'ProductView',
     components: {
@@ -155,6 +156,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             breadcrumbs: [
                 { text: 'Trang chủ', link: '/' },
                 { text: 'Sản Phẩm', link: '/product' },
@@ -238,7 +240,7 @@ export default {
             }
         },
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         async addToFavorites(productId) {
             try {

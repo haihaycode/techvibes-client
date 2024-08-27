@@ -401,6 +401,7 @@ import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 // import { Notyf } from 'notyf';
 import { formatCurrency, timeAgo } from '@/utils/utils';
+import CONFIG from '@/services/config';
 export default {
     name: "OrdersView",
     components: {
@@ -412,6 +413,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             isModalVisible: false,
             listOrder: {},
             listOrderDetail: {},
@@ -437,7 +439,7 @@ export default {
         formatCurrency,
         timeAgo,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         modal(o) {
             if (this.isModalVisible) {

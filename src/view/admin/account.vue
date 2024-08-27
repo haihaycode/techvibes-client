@@ -488,6 +488,8 @@ import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 import { timeAgo } from '@/utils/utils';
 import { mapActions } from 'vuex';
+import CONFIG from '@/services/config';
+
 export default {
     name: "accountView",
     components: {
@@ -509,6 +511,7 @@ export default {
         return {
             isModalVisible: false,
             accounts: [],
+            apiEndpoint: CONFIG.API_ENDPOINT,
 
             user: {
                 userId: '...',
@@ -540,6 +543,7 @@ export default {
 
         timeAgo,
         async loadAccounts() {
+
             this.user.loading = true;
             var notyf = new Notyf();
             try {
@@ -573,7 +577,7 @@ export default {
             }
         },
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/account/image/" + photo;
+            return `${this.apiEndpoint}/api/public/account/image/` + photo;
         },
         applyFilters() {
             let appliedFilters = { ...this.filters };

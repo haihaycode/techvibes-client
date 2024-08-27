@@ -164,6 +164,7 @@ import CartService from '@/services/cartService'; // Import CartService
 import favoriteService from '@/services/favoriteService';
 import Breadcrumb from '@/components/breadcrumb.vue';
 import { formatCurrency, timeAgo } from '@/utils/utils';
+import CONFIG from '@/services/config';
 
 export default {
     name: "cartView",
@@ -173,6 +174,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             breadcrumbs: [
                 { text: 'Trang chủ', link: '/' },
                 { text: 'Quản lý tài khoản', link: '/account' },
@@ -189,7 +191,7 @@ export default {
         formatCurrency,
         timeAgo,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         async addToFavorites(productId) {
             try {

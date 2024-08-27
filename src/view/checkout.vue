@@ -140,7 +140,7 @@
                                     <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Tổng tiền :
                                     </dt>
                                     <dd class="text-base font-extrabold text-red-500 dark:text-white ">{{
-                                        formatCurrency(totalPrice) }} VNĐ</dd>
+        formatCurrency(totalPrice) }} VNĐ</dd>
                                 </dl>
 
                                 <!-- Phương thức thanh toán -->
@@ -195,6 +195,8 @@ import addressService from '@/services/addressService';
 import checkoutService from '@/services/checkoutService';
 import { Notyf } from 'notyf';
 import Button from '@/components/button.vue';
+import CONFIG from '@/services/config';
+
 
 
 import { formatCurrency, timeAgo } from '@/utils/utils';
@@ -207,6 +209,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             breadcrumbs: [
                 { text: 'Trang chủ', link: '/' },
                 { text: 'Sản phẩm', link: '/product' },
@@ -227,7 +230,7 @@ export default {
         formatCurrency,
         timeAgo,
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         async addToFavorites(productId) {
             try {

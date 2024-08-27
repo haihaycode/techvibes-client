@@ -57,6 +57,8 @@ import { Notyf } from 'notyf';
 import { formatCurrency, timeAgo } from '@/utils/utils';
 import RelatedProductView from '@/components/relatedProduct.vue';
 import CartService from '@/services/cartService';
+import CONFIG from '@/services/config';
+
 
 export default {
     name: 'ProductDetailView',
@@ -72,6 +74,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             product: {},
             loading: false,
             breadcrumbs: [
@@ -102,7 +105,7 @@ export default {
             }
         },
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/product/image/" + photo;
+            return `${this.apiEndpoint}/api/public/product/image/` + photo;
         },
         async fetchProductById(id) {
             this.loading = true;

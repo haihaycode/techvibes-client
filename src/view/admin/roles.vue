@@ -493,6 +493,8 @@ import Button from '@/components/button.vue';
 import SkeletonTable from '@/components/SkeletonTable.vue';
 import { VTooltip } from 'v-tooltip';
 import { mapActions } from 'vuex';
+import CONFIG from '@/services/config';
+
 export default {
     name: "rolesView",
     directives: {
@@ -516,6 +518,7 @@ export default {
     },
     data() {
         return {
+            apiEndpoint: CONFIG.API_ENDPOINT,
             isModalVisible: false,
             accounts: [],
             roles: [],
@@ -580,7 +583,7 @@ export default {
             }
         },
         getPhoto(photo) {
-            return "http://localhost:8080/api/public/account/image/" + photo;
+            return `${this.apiEndpoint}/api/public/account/image/` + photo;
         },
         changeSort(field) {
             if (this.filters.sortField === field) {
