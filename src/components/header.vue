@@ -36,25 +36,25 @@
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
-                            <a href="/admin"
+                            <a href="#/admin"
                                 v-if="isLoggedIn & roles.includes('ROLE_ADMIN') || roles.includes('ROLE_STAFF')"
                                 class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <i class="fas fa-user-tie"></i> &nbsp; Trang Quản Lý</a>
                         </li>
                         <li>
-                            <a href=" /account" v-if="isLoggedIn"
+                            <a href="#/account" v-if="isLoggedIn"
                                 class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                 <i class="fad fa-user-cog"></i> &nbsp;Thông
                                 tin cá nhân</a>
                         </li>
                         <li>
-                            <a href="/account/order" v-if="isLoggedIn"
+                            <a href="#/account/order" v-if="isLoggedIn"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><i
                                     class="fad fa-shopping-cart"></i> &nbsp; Đơn
                                 hàng </a>
                         </li>
                         <li>
-                            <a href="/account/favorite" v-if="isLoggedIn"
+                            <a href="#/account/favorite" v-if="isLoggedIn"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><i
                                     class="fad fa-heart"></i> &nbsp; Yêu thích </a>
                         </li>
@@ -85,7 +85,7 @@
                     <li class="flex items-center mb-4 md:mb-0 border-1 border-gray-100">
 
                         <div class="flex items-center w-full md:w-auto">
-                            <form action="/product" method="get" class="flex items-center">
+                            <form action="#/product" method="get" class="flex items-center">
                                 <input id="search" name="keyword" type="text" placeholder="Tìm kiếm..."
                                     class="w-full md:w-auto px-4 py-2 border-0 rounded-md focus:ring-red-500 text-sm text-red-500" />
                             </form>
