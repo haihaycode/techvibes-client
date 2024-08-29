@@ -35,7 +35,7 @@
                             <div class="flex justify-between items-center">
                                 <button @click="addtocart(p.id)"
                                     class="text-red-600 flex items-center px-3 py-2 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white">
-                                    <span class="material-icons">add_shopping_cart</span>
+
                                     Thêm vào giỏ hàng
                                 </button>
                                 <button @click="addToFavorites(p.id)"
