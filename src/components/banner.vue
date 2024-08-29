@@ -1,7 +1,7 @@
 <template>
-    <div
+    <!-- <div
         class=" hidden md:block container mx-auto px-2 mt-2 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-        <!-- Banner 1 -->
+       
         <div
             class=" flex flex-col md:flex-row items-center justify-between bg-red-500 text-white p-4 rounded-lg w-full md:w-1/2">
             <div>
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <!-- Banner 2 -->
+        
         <div
             class="flex flex-col md:flex-row items-center justify-between bg-gray-400 text-white p-4 rounded-lg w-full md:w-1/2">
             <div>
@@ -33,6 +33,9 @@
             </div>
             <img src="/image/saleLogo50.svg" alt="iPhone 15 Pro Max" class="h-40 mt-4 md:mt-0">
         </div>
+    </div> -->
+    <div>
+
     </div>
 </template>
 
