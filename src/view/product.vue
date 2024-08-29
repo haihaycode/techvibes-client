@@ -4,7 +4,7 @@
 
     <div class="flex mx-4 sm:mx-10 mt-2">
         <!-- Nút mở modal -->
-        <button @click="openModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+        <button @click="openModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2  rounded">
             Mở bộ lọc
         </button>
 
@@ -140,7 +140,7 @@
                                 class="bg-white hover:bg-red-600 hover:text-white text-red-500 border border-red-500 font-bold py-2 w-full rounded text-sm">
                                 Lọc sản phẩm
                             </button>
-                            <button @click="resetFilters"
+                            <button @click="resetFilters,closeModal"
                                 class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 w-full rounded text-sm">
                                 Hủy lọc
                             </button>
