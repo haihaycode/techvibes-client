@@ -3,8 +3,8 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-1">
             <a href="/" class="flex items-center">
                 <img src="/image/logos.png" class="h-14" alt=" Logo Techvibes" />
-                <span class="text-white text-2xl px-2 font-medium">
-                    TechVibes <br> <span class="font-light text-xl">Thế giới công nghệ</span>
+                <span class="text-white text-xl px-2 font-medium md:text-2xl">
+                    TechVibes <br> <span class="font-light text-sm md:text-xl">Thế giới công nghệ</span>
                 </span>
             </a>
             <div class="relative flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
