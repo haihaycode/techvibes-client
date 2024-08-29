@@ -41,7 +41,7 @@
 
         <!-- Thông báo nếu sản phẩm không có -->
         <div v-else class="flex items-center justify-center p-4">
-            <p class="text-gray-600 text-lg">Sản phẩm không tồn tại</p>
+            <p class="text-gray-600 text-lg">...</p>
         </div>
 
         <!-- Chỉ hiển thị khi categoryId đã được load -->
