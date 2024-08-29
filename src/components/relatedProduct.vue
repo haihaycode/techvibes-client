@@ -13,7 +13,7 @@
                         <div class="flex justify-between items-center mb-2">
                             <span class="bg-red-600 text-white px-2 py-1 text-xs rounded">Giảm {{ p.discount }}%</span>
                         </div>
-                        <a :href="`/product/` + p.id" class="text-lg font-semibold hover:underline">{{ p.name }}</a>
+                        <a :href="`#/product/` + p.id" class="text-lg font-semibold hover:underline">{{ p.name }}</a>
                         <div class="flex items-baseline mb-2">
                             <span class="text-red-600 font-bold text-xl">{{ formatCurrency(p.price - (p.price *
                 (p.discount

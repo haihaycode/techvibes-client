@@ -281,6 +281,7 @@ export default {
                 // Redirect or additional actions after successful registration
             } catch (err) {
                 this.message = err.response.data.message || 'Registration failed';
+                console.error('Registration failed:', err);
                 this.isError = true;
                 notyf.error(this.message);
 
