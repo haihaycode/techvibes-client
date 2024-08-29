@@ -2,141 +2,153 @@
     <Breadcrumb :crumbs="breadcrumbs" />
 
 
-    <div class="flex mx-10 space-x-1 mt-2">
-        <!-- Thanh bộ lọc bên trái -->
-        <form class="w-1/5 h-full rounded  px-4 py-1" @submit.prevent="filterUpdate">
-
-            <!-- Bộ lọc theo giá -->
-            <div class="mb-4">
-                <label for="minPrice" class="block font-extralight mb-1">Giá tối thiểu :</label>
-                <input type="number" v-model.number="filters.minPrice" class="p-2 w-full border border-red-100 rounded"
-                    id="minPrice">
-            </div>
-            <div class="mb-4">
-                <label for="maxPrice" class="block font-extralight mb-1">Giá tối đa :</label>
-                <input type="number" v-model.number="filters.maxPrice" class="p-2 w-full border rounded" id="maxPrice">
-            </div>
-            <!-- Bộ lọc theo danh mục -->
-            <div class="mb-4">
-                <label for="categoryId" class="block font-extralight mb-1">Danh mục :</label>
-                <select v-model="filters.categoryId" class="p-2 w-full border font-extralight rounded" id="categoryId">
-                    <option value="">Tất cả</option>
-                    <option v-for="category in category.list" :key="category.id" :value="category.id">
-                        {{ category.name }}
-                    </option>
-                </select>
-            </div>
-            <!-- Bộ lọc theo từ khóa -->
-            <div class="mb-4">
-                <label for="keyword" class="block font-extralight mb-1">Từ khóa :</label>
-                <input type="text" v-model="filters.keyword" class="p-2 w-full border rounded" id="keyword"
-                    placeholder="chuột không dây ...">
-            </div>
-            <!-- Sắp xếp -->
-            <div class="mb-4">
-                <label for="sort" class="block font-extralight mb-1">Sắp xếp:</label>
-                <select v-model="filters.sortField" class="p-2 w-full border rounded font-extralight" id="sort">
-                    <option value="id">Mặc định</option>
-                    <option value="price">Giá</option>
-                    <option value="name">Tên</option>
-                    <option value="discount">Giảm giá</option>
-                    <option value="quantity">Số lượng</option>
-                    <option value="createdAt">Ngày đăng</option>
-                </select>
-                <select v-model="filters.sortDirection" class="p-2 w-full border rounded mt-2 font-extralight">
-                    <option value="asc">Tăng dần</option>
-                    <option value="desc">Giảm dần</option>
-                </select>
-            </div>
-            <div class="flex justify-between space-x-1">
-                <button type="submit"
-                    class="bg-white hover:bg-red-600  hover:text-white  text-red-500 border border-red-500 font-bold py-2 w-full rounded text-sm">
-                    Lọc sản phẩm
-                </button>
-                <button @click="resetFilters"
-                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 w-full rounded text-sm">
-                    Hủy lọc
-                </button>
-            </div>
-        </form>
+    <div class="flex mx-4 sm:mx-10 mt-2">
+        <!-- Nút mở modal -->
+        <button @click="openModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+            Mở bộ lọc
+        </button>
 
         <!-- Danh sách sản phẩm -->
-        <div class="w-4/5">
-
-            <CategoryGrid style="margin-top: 0 !important; padding-top: 0;"></CategoryGrid>
+        <div class="w-full sm:w-4/5">
+            <CategoryGrid class="mt-0 pt-0"></CategoryGrid>
 
             <div v-if="products.length === 0" class="w-full flex items-center justify-center p-4">
                 <p class="text-gray-600 text-lg">Không có sản phẩm nào</p>
             </div>
 
-            <div v-else class=" flex-grow flex flex-wrap w-full">
-                <div v-for="(p, i) in   products  " :key="i" class="sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4">
+            <div v-else class="flex flex-wrap w-full">
+                <div v-for="(p, i) in products" :key="i" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4">
                     <div class="bg-white rounded shadow-lg overflow-hidden">
-                        <img :src="getPhoto(p.image)" alt="Product 1" class="w-full h-100 object-cover">
+                        <img :src="getPhoto(p.image)" alt="Product Image" class="w-full h-48 object-cover">
                         <div class="p-4">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="bg-red-600 text-white px-2 py-1 text-xs rounded">Giảm {{ p.discount
                                     }}%</span>
                             </div>
-                            <a :href="`/product/` + p.id" class="text-lg font-semibold hover:underline ">{{ p.name
-                                }}</a>
+                            <a :href="`/product/` + p.id" class="text-lg font-semibold hover:underline">{{ p.name }}</a>
                             <div class="flex items-baseline mb-2">
                                 <span class="text-red-600 font-bold text-xl">{{ formatCurrency(p.price - (p.price *
-        (p.discount
-            /
-            100))) }} </span>
+        (p.discount / 100))) }}</span>
                                 <span class="text-gray-500 line-through ml-2">{{ formatCurrency(p.price) }}</span>
                             </div>
                             <p class="text-gray-600 text-sm mb-2 truncate">{{ p.descriptionSort }}</p>
                             <div class="flex justify-between items-center">
-                                <div class="flex items-center">
-                                    <button @click="addtocart(p.id)"
-                                        class="text-red-600 flex items-center px-3 py-2 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white">
-                                        <span class="material-icons"></span>
-                                        Thêm vào giỏ hàng &nbsp;
-
-                                    </button>
-                                </div>
+                                <button @click="addtocart(p.id)"
+                                    class="text-red-600 flex items-center px-3 py-2 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white">
+                                    <span class="material-icons">add_shopping_cart</span>
+                                    Thêm vào giỏ hàng
+                                </button>
                                 <button @click="addToFavorites(p.id)"
-                                    class="text-red-600 flex items-center px-3 py-2 rounded-full bg-red-100 ">
-                                    <span class="material-icons"></span>
-                                    <i class="far fa-heart text-red-500 "></i>
+                                    class="text-red-600 flex items-center px-3 py-2 rounded-full bg-red-100">
+                                    <span class="material-icons">favorite</span>
+                                    <i class="far fa-heart text-red-500"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-if="products.length > 0" class=" justify-center flex items-center mb-4 sm:mb-0">
+
+            <div v-if="products.length > 0" class="flex justify-center items-center mb-4">
                 <a @click.prevent="prevPage"
-                    class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                             d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                             clip-rule="evenodd"></path>
                     </svg>
                 </a>
-                <span
-                    class="border border-1 mx-2 rounded-lg text-gray-900 text-sm py-2 px-3 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{
-        filters.page + 1 }} / {{ filters.scope ?filters.scope.totalPages
-                    : "" }}
+                <span class="border border-gray-300 mx-2 rounded-lg text-gray-900 text-sm py-2 px-3 block">
+                    {{ filters.page + 1 }} / {{ filters.scope ? filters.scope.totalPages : "" }}
                 </span>
                 <a @click.prevent="nextPage"
-                    class="inline-flex justify-center p-1 mr-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                             d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                             clip-rule="evenodd"></path>
                     </svg>
                 </a>
-
-
-
             </div>
-
         </div>
 
-
+        <!-- Modal bộ lọc -->
+        <transition name="modal">
+            <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-full sm:w-1/3 p-6">
+                    <button @click="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-900">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M6.293 4.293a1 1 0 010 1.414L4.707 7.707 7.707 10.707a1 1 0 01-1.414 1.414L3.293 9.12a1 1 0 010-1.414L6.293 4.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                            <path fill-rule="evenodd"
+                                d="M13.707 4.293a1 1 0 00-1.414 0L10.586 7.707 7.293 4.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 000-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <h2 class="text-lg font-bold mb-4">Bộ lọc</h2>
+                    <form @submit.prevent="filterUpdate">
+                        <!-- Bộ lọc theo giá -->
+                        <div class="mb-4">
+                            <label for="minPrice" class="block font-light mb-1">Giá tối thiểu :</label>
+                            <input type="number" v-model.number="filters.minPrice"
+                                class="p-2 w-full border border-gray-300 rounded" id="minPrice">
+                        </div>
+                        <div class="mb-4">
+                            <label for="maxPrice" class="block font-light mb-1">Giá tối đa :</label>
+                            <input type="number" v-model.number="filters.maxPrice"
+                                class="p-2 w-full border border-gray-300 rounded" id="maxPrice">
+                        </div>
+                        <!-- Bộ lọc theo danh mục -->
+                        <div class="mb-4">
+                            <label for="categoryId" class="block font-light mb-1">Danh mục :</label>
+                            <select v-model="filters.categoryId" class="p-2 w-full border border-gray-300 rounded"
+                                id="categoryId">
+                                <option value="">Tất cả</option>
+                                <option v-for="category in category.list" :key="category.id" :value="category.id">
+                                    {{ category.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <!-- Bộ lọc theo từ khóa -->
+                        <div class="mb-4">
+                            <label for="keyword" class="block font-light mb-1">Từ khóa :</label>
+                            <input type="text" v-model="filters.keyword"
+                                class="p-2 w-full border border-gray-300 rounded" id="keyword"
+                                placeholder="chuột không dây ...">
+                        </div>
+                        <!-- Sắp xếp -->
+                        <div class="mb-4">
+                            <label for="sort" class="block font-light mb-1">Sắp xếp:</label>
+                            <select v-model="filters.sortField" class="p-2 w-full border border-gray-300 rounded"
+                                id="sort">
+                                <option value="id">Mặc định</option>
+                                <option value="price">Giá</option>
+                                <option value="name">Tên</option>
+                                <option value="discount">Giảm giá</option>
+                                <option value="quantity">Số lượng</option>
+                                <option value="createdAt">Ngày đăng</option>
+                            </select>
+                            <select v-model="filters.sortDirection"
+                                class="p-2 w-full border border-gray-300 rounded mt-2">
+                                <option value="asc">Tăng dần</option>
+                                <option value="desc">Giảm dần</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col space-y-2">
+                            <button type="submit"
+                                class="bg-white hover:bg-red-600 hover:text-white text-red-500 border border-red-500 font-bold py-2 w-full rounded text-sm">
+                                Lọc sản phẩm
+                            </button>
+                            <button @click="resetFilters"
+                                class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 w-full rounded text-sm">
+                                Hủy lọc
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 <script>
@@ -158,6 +170,7 @@ export default {
     data() {
         return {
             apiEndpoint: CONFIG.API_ENDPOINT,
+            isModalOpen: false,
             breadcrumbs: [
                 { text: 'Trang chủ', link: '/' },
                 { text: 'Sản Phẩm', link: '/product' },
@@ -231,6 +244,12 @@ export default {
         this.loadCategory();
     },
     methods: {
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+        },
         formatCurrency,
         timeAgo,
         async addtocart(itemId) {
