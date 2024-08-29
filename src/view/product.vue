@@ -41,7 +41,6 @@
                                 </button>
                                 <button @click="addToFavorites(p.id)"
                                     class="text-red-600 flex items-center px-3 py-2 rounded-full bg-red-100">
-                                    <span class="material-icons">favorite</span>
                                     <i class="far fa-heart text-red-500"></i>
                                 </button>
                             </div>
