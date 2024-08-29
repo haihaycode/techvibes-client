@@ -22,14 +22,14 @@
                     class="absolute md:top-10 md:right-10 top-10 right-0 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
                     id="user-dropdown">
                     <div class="px-4 py-3">
-                        <router-link v-if='!isLoggedIn' to="/login"
+                        <a v-if='!isLoggedIn' href="#/login"
                             class="block text-sm text-gray-500 truncate dark:text-gray-400 p-3"> <i
                                 class="fad fa-sign-in-alt"></i> &nbsp; Đăng nhập tài khoản
-                        </router-link>
-                        <router-link v-if='!isLoggedIn' to="/forgot-password"
+                        </a>
+                        <a v-if='!isLoggedIn' href="#/forgot-password"
                             class="block text-sm text-gray-500 truncate dark:text-gray-400 p-3"><i
                                 class="fad fa-lock"></i> &nbsp; Quên mật khẩu ?
-                        </router-link>
+                        </a>
                         <span v-if="isLoggedIn" class="block text-sm text-gray-500 truncate dark:text-gray-400 p-3"> <i
                                 class="fad fa-user"></i> &nbsp;{{
                     user.name ? user.name : user.email }}</span>
