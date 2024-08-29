@@ -43,7 +43,7 @@
         </div>
         <div class="">
             <div class="text-right justify-end ">
-                <a :href="`/product?categoryId=` + categoryId"
+                <a :href="`#/product?categoryId=` + categoryId"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full">
                     Xem thêm
                 </a>
