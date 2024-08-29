@@ -92,13 +92,13 @@
                         </div>
                     </li>
                     <li class="flex items-center mb-4 md:mb-0 border-2 rounded border-gray-100 text-xs px-2">
-                        <router-link to="/find-order"
+                        <a href="#/find-order"
                             class="flex items-center py-2 px-3 text-white rounded md:bg-transparent md:text-white-700 md:p-0 md:dark:text-blue-500 hover:underline"
                             aria-current="page">
                             <i class="fad fa-search px-2 "></i>
                             Tra cứu <br class="md:block hidden">
                             Sản phẩm
-                        </router-link>
+                        </a>
                     </li>
                     <li class="flex items-center mb-4 md:mb-0  border-2 rounded border-gray-100 text-xs px-2">
 
@@ -112,24 +112,24 @@
                     </li>
                     <li class="flex items-center mb-4 md:mb-0  border-2 rounded border-gray-100 text-xs px-2">
 
-                        <RouterLink to="/about-us"
+                        <a href="#/about-us"
                             class="flex items-center py-2 px-3 text-white rounded md:bg-transparent md:text-white-700 md:p-0 md:dark:text-blue-500 hover:underline">
                             <i class="fad fa-phone-rotary block text-white  px-2 "></i>
 
                             Liên hệ
                             <br class="md:block hidden">
                             chúng tôi
-                        </RouterLink>
+                        </a>
                     </li>
                     <li class="flex items-center mb-4 md:mb-0  border-2 rounded border-gray-100 text-xs px-2">
 
-                        <router-link to="/account/cart"
+                        <a href="#/account/cart"
                             class="flex items-center py-2 px-3 text-white rounded md:bg-transparent md:text-white-700 md:p-0 md:dark:text-blue-500 hover:underline">
                             <i class="fad fa-shopping-cart block text-white  px-2 "></i>
                             Giỏ hàng
                             <br class="md:block hidden">
                             của bạn
-                        </router-link>
+                        </a>
                     </li>
                 </ul>
 
