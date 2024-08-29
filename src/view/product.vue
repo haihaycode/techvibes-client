@@ -1,12 +1,13 @@
 <template>
     <Breadcrumb :crumbs="breadcrumbs" />
 
+    <button @click="openModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2  rounded">
+        Mở bộ lọc
+    </button>
 
     <div class="flex mx-4 sm:mx-10 mt-2">
         <!-- Nút mở modal -->
-        <button @click="openModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2  rounded">
-            Mở bộ lọc
-        </button>
+
 
         <!-- Danh sách sản phẩm -->
         <div class="w-full sm:w-4/5">
@@ -41,6 +42,7 @@
                                 </button>
                                 <button @click="addToFavorites(p.id)"
                                     class="text-red-600 flex items-center px-3 py-2 rounded-full bg-red-100">
+
                                     <i class="far fa-heart text-red-500"></i>
                                 </button>
                             </div>
