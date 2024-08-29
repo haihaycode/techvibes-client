@@ -12,7 +12,7 @@
 
             </div>
             <div class="flex items-center justify-center border  border-red-500 rounded p-2 hover:bg-gray-100">
-                <a :href="`/product`" class="text-sm font-normal text-black">
+                <a :href="`#/product`" class="text-sm font-normal text-black">
                     Tất cả
                 </a>
 
