@@ -77,13 +77,10 @@
             <div v-if="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white rounded-lg w-full sm:w-1/3 p-6">
                     <button @click="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-900">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M6.293 4.293a1 1 0 010 1.414L4.707 7.707 7.707 10.707a1 1 0 01-1.414 1.414L3.293 9.12a1 1 0 010-1.414L6.293 4.293a1 1 0 011.414 0z"
-                                clip-rule="evenodd"></path>
-                            <path fill-rule="evenodd"
-                                d="M13.707 4.293a1 1 0 00-1.414 0L10.586 7.707 7.293 4.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 000-1.414z"
-                                clip-rule="evenodd"></path>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                     </button>
                     <h2 class="text-lg font-bold mb-4">Bộ lọc</h2>
@@ -140,7 +137,7 @@
                                 class="bg-white hover:bg-red-600 hover:text-white text-red-500 border border-red-500 font-bold py-2 w-full rounded text-sm">
                                 Lọc sản phẩm
                             </button>
-                            <button @click="closeModal"
+                            <button @click="resetFilters"
                                 class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 w-full rounded text-sm">
                                 Hủy lọc
                             </button>
