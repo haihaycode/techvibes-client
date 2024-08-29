@@ -1,7 +1,7 @@
 <template>
     <Breadcrumb :crumbs="breadcrumbs" />
 
-    <button @click="openModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2  rounded">
+    <button @click="openModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 mx-4 px-4 rounded">
         Mở bộ lọc
     </button>
 
